@@ -1,3 +1,31 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
 body {
-    font-family: "Roboto", sans-serif;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.content {
+    flex: 1; /* This makes .content take up remaining vertical space */
+    position: relative;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
