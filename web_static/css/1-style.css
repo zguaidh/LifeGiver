@@ -1,7 +1,7 @@
 .landing {
     min-height: 130vh;
-    background-color: #1f2021;
-    background-image: url("../images/nguy-n-hi-p-2rNHliX6XHk-unsplash.jpg");
+    background-color: #eee;
+    /* background-image: url("../images/nguy-n-hi-p-2rNHliX6XHk-unsplash.jpg"); */
     background-size: cover;
     position: relative;
 }
