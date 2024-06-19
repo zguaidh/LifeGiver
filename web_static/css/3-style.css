@@ -1,0 +1,89 @@
+.landing {
+    min-height: 120vh;
+    background-color: #eee;
+    background-size: cover;
+    position: relative;
+}
+
+.landing .card {
+    position: absolute;
+    left: 50%;
+    top: 60%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    width: 1000px;
+    height: 350px;
+    padding: 25px;
+    background: transparent;
+    border: 2px solid rgb(255, 255, 255, .2);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgb(0, 0, 0, .2);
+    color: #fff;
+    border-radius: 10px;
+}
+
+.landing .card .imgBx {
+    width: 350px;
+    height: 420px;
+    overflow: hidden;
+    float: right;
+}
+
+.landing .card .imgBx img {
+    width: 100%;
+}
+
+.landing .card .infrBx {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 20px 0;
+}
+
+.landing .card .infrBx h1 {
+    color: #fa1919;
+}
+
+
+
+.input_feild {
+    display: flex;
+    flex-wrap: wrap;
+    width: 50%;
+    padding-bottom: 15px;
+}
+
+.input_feild label {
+    width: 95%;
+    color: #fa1919;
+    font-size: 20px;
+    font-weight: 400;
+    margin: 5px 0;
+}
+
+.input_feild input {
+    height: 40px;
+    width: 70%;
+    border-radius: 7px;
+    outline: none;
+    border: 1px solid grey;
+    padding: 0 10px;
+}
+
+button {
+    display: block;
+    width: 40%;
+    margin-top: 10px;
+    font-size: 20px;
+    padding: 10px;
+    border: none;
+    border-radius: 3px;
+    color: rgb(209, 209, 209);
+    background: #fa1919;
+}
+
+button:hover {
+    background: #fa1919;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+}
