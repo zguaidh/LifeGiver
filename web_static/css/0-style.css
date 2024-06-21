@@ -1,61 +1,217 @@
 .landing {
-    min-height: 130vh;
-    background-color: white;
-    /* background-image: url("../images/nguy-n-hi-p-2rNHliX6XHk-unsplash.jpg"); */
-    background-size: cover;
-    position: relative;
+  min-height: 160vh;
+  background-color: #eee;
+  /* background-image: url("../images/nguy-n-hi-p-2rNHliX6XHk-unsplash.jpg"); */
+  background-size: cover;
+  position: relative;
 }
 
-.landing img {
-    height: auto; 
-    display: block; 
-    margin-top: 150px;
+.landing .card {
+  position: absolute;
+  left: 50%;
+  top: 30%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 1000px;
+  height: 400px;
+  padding: 25px;
+  background: transparent;
+  border: 2px solid rgb(255, 255, 255, .2);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 10px rgb(0, 0, 0, .2);
+  color: #fff;
+  border-radius: 10px;
 }
 
-.content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: absolute;
-    min-height: 97px;
-  }
+.landing .card .imgBx {
+  width: 350px;
+  height: 420px;
+  overflow: hidden;
+  float: right;
+}
 
-.content nav {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    margin-top: 150px;
-    margin-left: 70px;
-  }
-  
-.content nav ul {
-    display: flex;
-  }
-  
-  @media (max-width: 767px) {
-    .content nav ul {
-      display: none;
-    }
-  
-  
-    .content nav ul li a {
-      padding: 15px !important;
-    }
-  }
-  
-.content nav ul li a {
-    padding: 40px 10px;
-    display: block;
-    color:rgb(206, 60, 60);
-    text-decoration:underline;
-    font-size: 20px;
-    font-weight: 300;
-    transition: 0.3s;
-    position: relative;
-    z-index: 2;
-  }
-  
-.content nav ul li a:hover {
-    color: var(--main-color);
-  }
+.landing .card .imgBx img {
+  width: 100%;
+}
+
+.landing .card .infrBx {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content:flex-start;
+  padding: 50px 60px;
+}
+
+.landing .card .infrBx h1 {
+  color: #fa1919;
+}
+
+.landing .card .infrBx .hospital{
+  padding-left: 190px;
+}
+
+.input_feild {
+  display: flex;
+  flex-wrap: wrap;
+  width: 50%;
+  padding-bottom: 15px;
+}
+
+.landing .card .infrBx .hospital p ,
+.landing .card .infrBx .donor p{
+  width: 95%;
+  color: #fa1919;
+  font-size: 23px;
+  font-weight:600;
+  margin: 20px 0;
+}
+
+.landing .card .infrBx .hospital a ,
+.landing .card .infrBx .donor a{
+  display: block;
+  width: 150%;
+  margin-top: 10px;
+  font-size: 20px;
+  padding: 10px;
+  border: none;
+  border-radius: 3px;
+  color: rgb(209, 209, 209);
+  background: #fa1919;
+  text-decoration: none;
+  text-align: center;
+}
+
+.landing .card .infrBx .hospital a:hover,
+.landing .card .infrBx .donor a:hover {
+  background: #fa1919;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+}
+
+.landing .container0 {
+  position: absolute;
+  left: 50%;
+  top: 65%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 1000px;
+  height: 400px;
+  padding: 25px;
+}
+
+.landing .container0 .urgent{
+  display: flex;
+}
+
+.landing .container0 .urgent p{
+  width: 95%;
+  color: #fa1919;
+  font-size: 30px;
+  font-weight:600;
+  margin: 20px 0;
+  padding-left: 20px;
+  margin-top: 30px;
+  font-family: "Acme", sans-serif;
+}
+
+.landing .container0 .urgent img{
+width: 80px;
+}
+
+.landing .container0 .banner{
+  position: absolute;
+  left: 50%;
+  top: 80%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 1000px;
+  height: 350px;
+  padding: 25px;
+  background-color: #fa1919 !important;
+  background: transparent;
+  border: 2px solid rgb(255, 255, 255, .2);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 10px rgb(0, 0, 0, .2);
+  color: #fff;
+  border-radius: 10px;
+}
+
+.landing .container0 .banner svg {
+  width: 20px;
+}
+
+.landing .container0 .banner p {
+  color: black;
+  padding-left: 10px;
+  margin-top: 5px;
+  font-size: 20px;
+  font-family: "Acme", sans-serif;
+}
+
+.landing .container0 .banner .hospital,
+.landing .container0 .banner .blood,
+.landing .container0 .banner .location{
+  display: flex;
+  padding: 5px;
+}
+
+.landing .container0 .banner .ads1{
+  position: relative;
+  padding-left: 10px;
+  background: transparent;
+  border: 2px solid rgb(255, 255, 255, .2);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 10px rgb(0, 0, 0, .2);
+  color: #fff;
+  border-radius: 10px;
+  background-color: #eee !important;
+}
+
+.landing .container0 .banner .ads2{
+  position: relative;
+  top: 5%;
+  padding-left: 10px;
+  padding-top: 10px;
+  background: transparent;
+  border: 2px solid rgb(255, 255, 255, .2);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 10px rgb(0, 0, 0, .2);
+  color: #fff;
+  border-radius: 10px;
+  background-color: #eee !important;
+}
+
+.landing .container0 .banner .ads1 button ,
+.landing .container0 .banner .ads, button {
+  display: block;
+  width: 30%;
+  margin-top: 10px;
+  font-size: 20px;
+  padding: 10px;
+  border: none;
+  border-radius: 3px;
+  background: #fa1919;
+}
+
+.landing .container0 .banner .ads1 button a,
+.landing .container0 .banner .ads, button a {
+  text-decoration: none;
+  text-align: center;
+  color: rgb(209, 209, 209);
+}
+
+.landing .container0 .banner .ads1 button a:hover,
+.landing .container0 .banner .ads, button a:hover {
+  background: #fa1919;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+}
+
+.landing .container0 .banner .ads1 button {
+  position: absolute;
+  transform: translate(200%, -150%);
+}
+
+.landing .container0 .banner .ads2 button {
+  position: absolute;
+  transform: translate(198%, -70%);
+}
