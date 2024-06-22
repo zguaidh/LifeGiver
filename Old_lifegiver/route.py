@@ -2,9 +2,9 @@ import secrets
 from PIL import Image
 import os
 from flask import render_template, flash, redirect, url_for, request, session, abort
-from lifegiver.forms import DonorLoginForm, DonorRegistrationForm, HospitalRegistrationForm, DonorUpdatingForm, CRUDRequestForm
-from lifegiver import app, db, bcrypt
-from lifegiver.models  import Donor, Hospital, UserDonation, DonationRequest, UrgentRequest
+from Old_lifegiver.forms import DonorLoginForm, DonorRegistrationForm, HospitalRegistrationForm, DonorUpdatingForm, CRUDRequestForm
+from Old_lifegiver import app, db, bcrypt
+from Old_lifegiver.models  import Donor, Hospital, UserDonation, DonationRequest, UrgentRequest
 from flask_login import login_user, current_user, logout_user, login_required
 
 
