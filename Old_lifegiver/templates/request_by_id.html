@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block content %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+                <!--replace it with the hospital name later-->
+              <a class="mr-2" href="#">{{ request.hospital_request.barcode }}</a> <!--using the backref : hospital_request in the Hospital relashioships-->              
+              <small class="text-muted">{{ request.request_date.strftime('%Y-%m-%d') }}</small>
+            </div>
+            <h2><a class="article-title" href="#">{{ 'Blood type: ' ~ request.blood_type }}</a></h2>
+            <h2 class="article-title" >{{ 'Request status: ' ~ request.status }}</a></h2>
+         
+            <p class="article-content">{{ 'Expiration date: ' ~ request.expiration_date.strftime('%Y-%m-%d') }}</p>
+          </div>
+        </article>
+{% endblock content %}

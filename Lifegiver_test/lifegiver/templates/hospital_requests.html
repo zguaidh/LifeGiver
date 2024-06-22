@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1 class="mb-3">Requested by {{ hospital.barcode }} ({{ requests.total }})</h1>
+    {% for req in requests.items %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+                <!--replace it wit the hospital name later-->
+              <a class="mr-2" href="{{ url_for('hospital_requests', barcode=req.hospital_request.barcode) }}">{{ req.hospital_request.barcode }}</a> <!--using the backref : hospital-->              
+              <small class="text-muted">{{ req.request_date.strftime('%Y-%m-%d') }}</small>
+            </div>
+            <h2><a class="article-title" href="{{ url_for('don_request', don_request_id=req.id) }}">{{ 'Blood type: ' ~ req.blood_type }}</a></h2>
+            <h2><a class="article-title" href="#">{{ 'Request status: ' ~ req.status }}</a></h2>
+         
+            <p class="article-content">{{ 'Expiration date: ' ~ req.expiration_date.strftime('%Y-%m-%d') }}</p>
+          </div>
+        </article>
+    {% endfor %}
+    
+    {% for page_num in requests.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=1) %}
+      {% if page_num %}
+        {% if requests.page == page_num %} <!--adding a conditional to show on which page we are currently-->
+          <a class="btn btn-info mb-4" href="{{ url_for('hospital_requests', barcode=hospital.barcode, page=page_num) }}">{{ page_num }}</a>
+        {% else %}
+          <a class="btn btn-outline-info mb-4" href="{{ url_for('hospital_requests',barcode=hospital.barcode, page=page_num) }}">{{ page_num }}</a>
+        {% endif %}
+      {% else %}
+        ...
+      {% endif %}
+    {% endfor %}
+{% endblock content %}
