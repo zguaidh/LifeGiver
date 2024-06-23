@@ -1,18 +1,18 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h1 class="mb-3">Requested by {{ hospital.name }} ({{ requests.total }})</h1>
+    <h1 class="mb-3">Urgent Requestes posted by: {{ hospital.name }} ({{ requests.total }})</h1>
     {% for req in requests.items %}
         <article class="media content-section">
           <div class="media-body">
             <div class="article-metadata">
                 <!--replace it wit the hospital name later-->
-              <a class="mr-2" href="{{ url_for('hospital_requests', name=hospital.name) }}">{{ req.hospital_request.name }}</a> <!--using the backref : hospital-->              
+              <a class="mr-2" href="{{ url_for('hospital__urgent_requests', name=req.hospital_urgent_request.name) }}">{{ req.hospital_urgent_request.name }}</a> <!--using the backref : hospital-->              
               <small class="text-muted">{{ req.request_date.strftime('%Y-%m-%d') }}</small>
             </div>
-            <h2><a class="article-title" href="{{ url_for('don_request', don_request_id=req.id) }}">{{ 'Blood type: ' ~ req.blood_type }}</a></h2>
+            <h2><a class="article-title" href="{{ url_for('urgent_request', urgent_request_id=req.id) }}">{{ 'Blood type: ' ~ req.blood_type }}</a></h2>
             <h2><a class="article-title" href="#">{{ 'Request status: ' ~ req.status }}</a></h2>
             <!--replace # with the google maps api-->
-            <h2><a class="article-title" href="#">{{ 'Location: ' ~ req.hospital_request.street ~ ' ' ~ req.hospital_request.city ~ ', ' ~ req.hospital_request.country }}</a></h2>
+            <h2><a class="article-title" href="#">{{ 'Location: ' ~ req.hospital_urgent_request.street ~ ' ' ~ req.hospital_urgent_request.city ~ ', ' ~ req.hospital_urgent_request.country }}</a></h2>
 
          
             <p class="article-content">{{ 'Expiration date: ' ~ req.expiration_date.strftime('%Y-%m-%d') }}</p>
@@ -23,9 +23,9 @@
     {% for page_num in requests.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=1) %}
       {% if page_num %}
         {% if requests.page == page_num %} <!--adding a conditional to show on which page we are currently-->
-          <a class="btn btn-info mb-4" href="{{ url_for('hospital_requests', name=hospital.name, page=page_num) }}">{{ page_num }}</a>
+          <a class="btn btn-info mb-4" href="{{ url_for('hospital_urgent_requests', name=hospital.name, page=page_num) }}">{{ page_num }}</a>
         {% else %}
-          <a class="btn btn-outline-info mb-4" href="{{ url_for('hospital_requests',name=hospital.name, page=page_num) }}">{{ page_num }}</a>
+          <a class="btn btn-outline-info mb-4" href="{{ url_for('hospital_urgent_requests',name=hospital.name, page=page_num) }}">{{ page_num }}</a>
         {% endif %}
       {% else %}
         ...

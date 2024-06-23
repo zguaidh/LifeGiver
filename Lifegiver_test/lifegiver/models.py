@@ -39,6 +39,7 @@ class Donor(db.Model, UserMixin):
     country = db.Column(db.String(100), nullable=False)
     registration_date = db.Column(db.DateTime, nullable=False, default=datetime.now)
     national_id = db.Column(db.String(45), unique=True, nullable=False)
+    # Implemet the method to increment the count later
     donation_count = db.Column(db.Integer, default=0)
 
     # One Donor has many UserDonations
@@ -79,6 +80,7 @@ class Hospital(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(225), nullable=False)
 #    address = db.Column(db.String(500), nullable=False)
+    image_file = db.Column(db.String(20), nullable=False, default='default1.png')
     street = db.Column(db.String(500), nullable=True)
     city = db.Column(db.String(100), nullable=True)
     province = db.Column(db.String(100), nullable=True)
@@ -140,9 +142,10 @@ class UrgentRequest(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     hospital_id = db.Column(db.Integer, db.ForeignKey('hospital.id'), nullable=False)
     blood_type = db.Column(db.Enum('O-', 'O+', 'A-', 'A+', 'B-', 'B+', 'AB-', 'AB+'), nullable=False)
-    start_date = db.Column(db.DateTime, nullable=False, default=datetime.now)
-    end_date = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now() + timedelta(days=15))
+    request_date = db.Column(db.DateTime, nullable=False, default=datetime.now)
+    expiration_date = db.Column(db.DateTime, nullable=False, default=lambda: datetime.now() + timedelta(days=15))
 
+    
     def __repr__(self):
         return f"EmergencyRequest(id={self.id}, hospital_id={self.hospital_id}, blood_type='{self.blood_type}', start_date='{self.start_date}', end_date='{self.end_date}')"
 

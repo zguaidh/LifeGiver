@@ -5,15 +5,20 @@
           <div class="media-body">
             <div class="article-metadata">
                 <!--replace it wit the hospital name later-->
-              <a class="mr-2" href="{{ url_for('hospital_requests', barcode=request.hospital_request.barcode) }}">{{ request.hospital_request.barcode }}</a> <!--using the backref : hospital-->              
+              <a class="mr-2" href="{{ url_for('hospital_requests', name=request.hospital_request.name) }}">{{ request.hospital_request.name }}</a> <!--using the backref : hospital-->              
               <small class="text-muted">{{ request.request_date.strftime('%Y-%m-%d') }}</small>
             </div>
             <h2><a class="article-title" href="{{ url_for('don_request', don_request_id=request.id) }}">{{ 'Blood type: ' ~ request.blood_type }}</a></h2>
             <h2><a class="article-title" href="#">{{ 'Request status: ' ~ request.status }}</a></h2>
-         
+            <!--replace # with the google maps api-->
+            <h2><a class="article-title" href="#">{{ 'Location: ' ~ request.hospital_request.street ~ ' ' ~ request.hospital_request.city ~ ', ' ~ request.hospital_request.country }}</a></h2>
+
             <p class="article-content">{{ 'Expiration date: ' ~ request.expiration_date.strftime('%Y-%m-%d') }}</p>
           </div>
-        </article>
+          <div>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('schedulr_donation', don_request_id=request.id) }}">Donate</a>
+          </div>
+         
     {% endfor %}
     
     {% for page_num in requests.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=1) %}

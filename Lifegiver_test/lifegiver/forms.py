@@ -67,8 +67,6 @@ class HospitalRegistrationForm(FlaskForm):
 
     name = StringField('Name',
                            validators=[DataRequired(), Length(min=2, max=120)])
-    barcode = StringField('Barcode',
-                           validators=[DataRequired(), Length(min=2, max=120)])
     password = PasswordField('Password', validators=[DataRequired()])
     confirm_password = PasswordField('Confirm Password',
                                      validators=[DataRequired(), EqualTo('password')])
@@ -83,6 +81,17 @@ class HospitalRegistrationForm(FlaskForm):
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
     
+# to prevent the "IntegrityError" when trying to log with an existing email:
+    def validate_username(self, username):
+        donor = Hospital.query.filter_by(name=username.data).first()
+        if donor:
+            raise ValidationError('That username is taken. Please choose a different one.')
+
+    def validate_email(self, email):
+        donor = Hospital.query.filter_by(email=email.data).first()
+        if donor:
+            raise ValidationError('That email is taken. Please choose a different one.')
+
 
 
 class DonorUpdatingForm(FlaskForm):
@@ -100,8 +109,26 @@ class DonorUpdatingForm(FlaskForm):
     country = StringField('Country', validators=[DataRequired(), Length(max=100)])
     national_id = StringField('National ID', validators=[DataRequired(), Length(max=45)])
     picture = FileField('Update Account Picture', validators=[FileAllowed(['jpg', 'png'])])
+    
 
     submit = SubmitField('Update')
+
+class HospitalUpdatingForm(FlaskForm):
+    name = StringField('Name',
+                            validators=[DataRequired(), Length(min=2, max=225)])
+    email = StringField('Email',
+                            validators=[DataRequired(), Email()])
+    phone_number = StringField('Phone Number', validators=[DataRequired(), Length(min=10, max=45)])
+    street = StringField('Street', validators=[DataRequired(), Length(max=500)])
+    city = StringField('City', validators=[DataRequired(), Length(max=100)])
+    province = StringField('Province', validators=[DataRequired(), Length(max=100)])
+    zip_code = StringField('Zip Code', validators=[DataRequired(), Length(max=45)])
+    country = StringField('Country', validators=[DataRequired(), Length(max=100)])
+    picture = FileField('Update Account Picture', validators=[FileAllowed(['jpg', 'png'])])
+
+    submit = SubmitField('Update')
+
+
 
     def validate_username(self, username):
         # check if the updated username is different than the current username
@@ -119,7 +146,7 @@ class DonorUpdatingForm(FlaskForm):
             if donor:
                 raise ValidationError('That email is taken. Please choose a different one.')
             
-
+# Form for the CRUD operations of donation requests
 class CRUDRequestForm(FlaskForm):
     hospital_id = StringField('Hospital ID', validators=[DataRequired()])
     # to change later to be a selectfield later
@@ -128,6 +155,15 @@ class CRUDRequestForm(FlaskForm):
     status = SelectField('Status', choices=[('pending', 'Pending'), ('fulfilled', 'Fulfilled'), ('failed', 'Failed')], validators=[DataRequired()])
     expiration_date = DateTimeField('Expiration Date', validators=[DataRequired()])
     submit = SubmitField('Submit Request')
+
+# Form for the CRUD operations of urgent donation requests
+class CRUDUrgentRequestForm(FlaskForm):
+    hospital_id = StringField('Hospital ID', validators=[DataRequired()])
+    # to change later to be a selectfield later
+    blood_type = SelectField('Blood Type', choices=[('O-', 'O-'), ('O+', 'O+'), ('A-', 'A-'), ('A+', 'A+'), ('B-', 'B-'), ('B-', 'B+'), ('AB-', 'AB-'), ('AB+', 'AB+')], validators=[DataRequired()])
+    request_date = DateTimeField('Request Date', default=datetime.now, validators=[DataRequired()])
+    expiration_date = DateTimeField('Expiration Date', validators=[DataRequired()])
+    submit = SubmitField('Submit  Urgent Request')
 
 
 class RequestResetForm(FlaskForm):
@@ -146,5 +182,10 @@ class ResetPasswordForm(FlaskForm):
     confirm_password = PasswordField('Confirm Password',
                                      validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Reset Password')
+
+class UserDonationForm(FlaskForm):
+    donation_date = DateTimeField('Donation Date', default=datetime.now, validators=[DataRequired()])
+    status = SelectField('Status', choices=[('requested', 'Requested'), ('voluntary', 'Voluntary')], validators=[DataRequired()])
+    submit = SubmitField('Donate Now')
 
     

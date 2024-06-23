@@ -8,6 +8,12 @@
           <p class="text-secondary">{{ current_user.email }}</p>
         </div>
       </div>
+      <div class="container">
+        <h1 class="border-bottom mb-4">Your Donation Count is : {{ requests.total }}</h1>
+      </div>
+        
+    
+    </div>
 <!--The same form as the new_donor ( changes: deleted the password and confirm password and replaced the Legend 'Join today' to 'Account info')-->
 <div class="content-section">
     <!-- adding the encoding to pass the image data properly-->
