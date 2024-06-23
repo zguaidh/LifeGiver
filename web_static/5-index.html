@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/5-style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Acme&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/all.min.css" />
+    <link rel="icon" href="images/droplet-solid.svg">
+    <title>Request Page</title>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <a href="0-index.html" class="logo">
+                Life Giver
+            </a>
+            <nav>
+                <ul>
+                    <li><a class="active" href="0-index.html">Home</a></li>
+                    <li><a href="5-index.html">Requests</a></li>
+                    <li><a href="6-index.html">Urgent Requests</a></li>
+                    <li><a href="7-index.html">Dashboard</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="landing">
+        <div class="card">
+            <div class="imgBx">
+                <img src="images/transparent-cartoon-red-blood-blood-droplets-blood-bubbles-dar-2d-image-of-red-blood-droplets-in-bubbles658ea3c57cbf28.655540331703846853511.png"
+                    alt="Hospital">
+            </div>
+            <div class="infrBx">
+                <div class="input_feild">
+                    <label for="Blood type">Needed blood type</label>
+                    <select name="Blood type" id="Blood type">
+                        <option value="Blood type">Blood type</option>
+                        <option value="A+">A+</option>
+                        <option value="B+">B+</option>
+                        <option value="O+">O+</option>
+                        <option value="AB+">AB+</option>
+                        <option value="A-">A-</option>
+                        <option value="B-">B-</option>
+                        <option value="O-">O-</option>
+                        <option value="AB-">AB-</option>
+                    </select>
+                </div>
+                <div class="input_feild">
+                    <label for="Number Donor">Number Donor</label>
+                    <input type="tel" placeholder="Number Donor">
+                </div>
+                <div class="input_feild">
+                    <label for="Start Date">Start Date</label>
+                    <input type="date" placeholder="Start Date">
+                </div>
+                <div class="input_feild">
+                    <label for="End Date">End Date</label>
+                    <input type="date" placeholder="End Date">
+                </div>
+                <div class="warp">
+                    <div class="Urgent">
+                        <input type="checkbox" id="check1">
+                        <label for="check1">Raise the request as urgent one</label>
+                    </div>
+                    <p>Request status:</p>
+                    <div class="group">
+                        <input type="checkbox" id="check1">
+                        <label for="check1">Pending</label>
+                    </div>
+                    <div class="group">
+                        <input type="checkbox" id="check1">
+                        <label for="check1">Fulfilled</label>
+                    </div>
+                    <div class="group">
+                        <input type="checkbox" id="check1">
+                        <label for="check1">Failed</label>
+                    </div>
+                </div>
+                <button>send</button>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="container">
+            <a href="#" class="logo">
+                Life Giver
+            </a>
+            <p>
+                <img src="images/github.svg" alt="Github">
+                <a href="https://github.com/zguaidh/Test_portofolio">Life Giver _ Github</a>
+            </p>
+        </div>
+    </footer>
+</body>
+
+</html>
