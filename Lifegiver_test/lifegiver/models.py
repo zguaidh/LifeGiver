@@ -45,6 +45,11 @@ class Donor(db.Model, UserMixin):
     # One Donor has many UserDonations
     donor_donations = db.relationship('UserDonation', backref='donor', lazy=True)
 
+    # method to increment the donation count:
+    def increment_donation_count(self):
+        self.donation_count += 1
+        db.session.commit()
+
     # method that creates tokens 
     def get_reset_token(self, expires_sec=1800):
         # Debugging: Print the type and value of app.config['SECRET_KEY']
