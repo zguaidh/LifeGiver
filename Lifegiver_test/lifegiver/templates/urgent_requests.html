@@ -15,7 +15,7 @@
             <p class="article-content">{{ 'Expiration date: ' ~ request.expiration_date.strftime('%Y-%m-%d') }}</p>
           </div>
           <div>
-            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('donation', don_request_id=request.hospital_urgent_request.id) }}">Donate</a>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('urgent_donation', don_request_id=request.hospital_urgent_request.id) }}">Donate Now</a>
           </div>
         </article>
         </article>

@@ -522,27 +522,6 @@ def reset_token(token):
     return render_template('reset_token.html', title='Reset Password', form=form)
 
 
-@app.route("/schedule_donation/<int:don_request_id>", methods=['GET', 'POST'], strict_slashes=False)
-@login_required
-def schedule_donation(don_request_id):
-    don_request = DonationRequest.query.get_or_404(don_request_id)
-    form = UserDonationForm()
-    if form.validate_on_submit():
-        user_donation =UserDonation(
-            donation_date=form.donation_date.data,
-            status='requested',
-            donor_id=current_user.id,
-            request_id=don_request.id,
-            hospital_id=don_request.hospital_request.id
-        )
-        db.session.add(user_donation)
-        db.session.commit()
-        flash('Your donation session has been booked in the hospital', 'success')
-        return redirect(url_for('donation', don_request_id=don_request_id, user_donation=user_donation))
-    if request.method == 'GET':
-        form.donation_date.data=datetime.now()
-    return render_template("schedule_donation.html", title='Donating page', don_request=don_request, form=form)
-
 # send a msg to the hospital
 def send_urg_donation_email(user, request_id):
     msg = Message(' Your Donation Request has been approved',
@@ -563,20 +542,48 @@ Thank you for using LifeGiver!
 '''
     mail.send(msg)
 
+@app.route("/urgent_donation/<int:don_request_id>", methods=['GET', 'POST'], strict_slashes=False)
+@login_required
+def urgent_donation(don_request_id):
+    urgent_request = UrgentRequest.query.get(don_request_id)
+
+    hospital = urgent_request.hospital_urgent_request
+    send_urg_donation_email(hospital, don_request_id)
+    
+    return render_template("urgent_donation.html", title='Donating page', urgent_request=urgent_request)
+
+
+@app.route("/schedule_donation/<int:don_request_id>", methods=['GET', 'POST'], strict_slashes=False)
+@login_required
+def schedule_donation(don_request_id):
+    don_request = DonationRequest.query.get_or_404(don_request_id)
+    form = UserDonationForm()
+    if form.validate_on_submit():
+        user_donation =UserDonation(
+            donation_date=form.donation_date.data,
+            status='requested',
+            donor_id=current_user.id,
+            request_id=don_request.id,
+            hospital_id=don_request.hospital_request.id
+        )
+        db.session.add(user_donation)
+        db.session.commit()
+        current_user.increment_donation_count()
+        flash('Your donation session has been booked in the hospital', 'success')
+        return redirect(url_for('donation', don_request_id=don_request_id))
+    elif request.method == 'GET':
+        form.donation_date.data=datetime.now()
+    return render_template("schedule_donation.html", title='Schedule Donation', don_request=don_request, form=form)
+
+
 @app.route("/donation/<int:don_request_id>", methods=['GET', 'POST'], strict_slashes=False)
 @login_required
 def donation(don_request_id):
-    urgent_request = UrgentRequest.query.get(don_request_id)
     don_request = DonationRequest.query.get(don_request_id)
-    if urgent_request:
-        hospital = urgent_request.hospital_urgent_request
-        send_urg_donation_email(hospital, don_request_id)
-        user_donation = None
-    else:
-        user_donation = UserDonation.query.filter_by(request_id=don_request_id, donor_id=current_user.id).first()
-        if not user_donation:
-            redirect(url_for("schedule_donation", don_request_id=don_request_id))
-    
-    return render_template("donation.html", title='Donating page', urgent_request=urgent_request, don_request=don_request, user_donation=user_donation)
 
+#    hospital = request.hospital_urgent_request
+#    send_urg_donation_email(hospital, don_request_id)
+#    user_donation = UserDonation.query.filer_by(request_id=don_request_id)
+    
+    return render_template("donation.html", title='Donating page', don_request=don_request)
 
