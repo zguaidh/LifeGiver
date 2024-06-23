@@ -4,19 +4,19 @@
           <div class="media-body">
             <div class="article-metadata">
                 <!--replace it with the hospital name later-->
-              <a class="mr-2" href="{{ url_for('hospital_requests', name=request.hospital_request.name) }}">{{ request.hospital_request.name }}</a> <!--using the backref : hospital_request in the Hospital relashioships-->              
+              <a class="mr-2" href="{{ url_for('hospital_urgent_requests', name=request.hospital_urgent_request.name) }}">{{ request.hospital_urgent_request.name }}</a> <!--using the backref : hospital_request in the Hospital relashioships-->              
               <small class="text-muted">{{ request.request_date.strftime('%Y-%m-%d') }}</small>
-              {% if request.hospital_request.id == current_user.id  %}
+              {% if request.hospital_urgent_request.id == current_user.id  %}
               <div>
-                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('update_don_request', don_request_id=request.id) }}">Update</a>
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('update_urgent_request', urgent_request_id=request.id) }}">Update</a>
                 <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
               </div>
                 {% endif %}
             </div>
             <h2><a class="article-title" href="#">{{ 'Blood type: ' ~ request.blood_type }}</a></h2>
-            <h2 class="article-title" >{{ 'Request status: ' ~ request.status }}</a></h2>
+            
             <!--replace # with the google maps api-->
-            <h2><a class="article-title" href="#">{{ 'Location: ' ~ request.hospital_request.street ~ ' ' ~ request.hospital_request.city ~ ', ' ~ request.hospital_request.country }}</a></h2>
+            <h2><a class="article-title" href="#">{{ 'Location: ' ~ request.hospital_urgent_request.street ~ ' ' ~ request.hospital_urgent_request.city ~ ', ' ~ request.hospital_urgent_request.country }}</a></h2>
 
          
             <p class="article-content">{{ 'Expiration date: ' ~ request.expiration_date.strftime('%Y-%m-%d') }}</p>
@@ -35,7 +35,7 @@
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <form action="{{ url_for('delete_don_request', don_request_id=request.id) }}" method="POST">
+                <form action="{{ url_for('delete_urgent_request', urgent_request_id=request.id) }}" method="POST">
                     <input class="btn btn-danger" type="submit" value="Delete">
                 </form>
                 </div>

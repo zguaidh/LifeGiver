@@ -1,7 +1,35 @@
-{% extends 'layout.html' %}
-
+{% extends "layout.html" %}
 {% block content %}
+    {% for request in requests.items %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+                <!--replace it wit the hospital name later-->
+              <a class="mr-2" href="{{ url_for('hospital_urgent_requests', name=request.hospital_urgent_request.name) }}">{{ request.hospital_urgent_request.name }}</a> <!--using the backref : hospital-->              
+              <small class="text-muted">{{ request.request_date.strftime('%Y-%m-%d') }}</small>
+            </div>
+            <h2><a class="article-title" href="{{ url_for('urgent_don_request', urgent_request_id=request.id) }}">{{ 'Blood type: ' ~ request.blood_type }}</a></h2>
+            <!--replace # with the google maps api-->
+            <h2><a class="article-title" href="#">{{ 'Location: ' ~ request.hospital_urgent_request.street ~ ' ' ~ request.hospital_urgent_request.city ~ ', ' ~ request.hospital_urgent_request.country }}</a></h2>
 
-    <h1>Urgent requests page</h1>
-
-{% endblock content%}
+            <p class="article-content">{{ 'Expiration date: ' ~ request.expiration_date.strftime('%Y-%m-%d') }}</p>
+          </div>
+          <div>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('donation', don_request_id=request.hospital_urgent_request.id) }}">Donate</a>
+          </div>
+        </article>
+        </article>
+    {% endfor %}
+    
+    {% for page_num in requests.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=1) %}
+      {% if page_num %}
+        {% if requests.page == page_num %} <!--adding a conditional to show on which page we are currently-->
+          <a class="btn btn-info mb-4" href="{{ url_for('urgent_requests', page=page_num) }}">{{ page_num }}</a>
+        {% else %}
+          <a class="btn btn-outline-info mb-4" href="{{ url_for('urgent_requests', page=page_num) }}">{{ page_num }}</a>
+        {% endif %}
+      {% else %}
+        ...
+      {% endif %}
+    {% endfor %}
+{% endblock content %}
