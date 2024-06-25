@@ -5,12 +5,11 @@
         <article class="media content-section">
           <div class="media-body">
             <div class="article-metadata">
-                <!--replace it wit the hospital name later-->
-              <a class="mr-2" href="{{ url_for('hospital__urgent_requests', name=req.hospital_urgent_request.name) }}">{{ req.hospital_urgent_request.name }}</a> <!--using the backref : hospital-->              
+                
+              <a class="mr-2" href="{{ url_for('hospital_urgent_requests', name=hospital.name) }}">{{ req.hospital_urgent_request.name }}</a> <!--using the backref : hospital-->              
               <small class="text-muted">{{ req.request_date.strftime('%Y-%m-%d') }}</small>
             </div>
-            <h2><a class="article-title" href="{{ url_for('urgent_request', urgent_request_id=req.id) }}">{{ 'Blood type: ' ~ req.blood_type }}</a></h2>
-            <h2><a class="article-title" href="#">{{ 'Request status: ' ~ req.status }}</a></h2>
+            <h2><a class="article-title" href="{{ url_for('urgent_requests', urgent_request_id=req.id) }}">{{ 'Blood type: ' ~ req.blood_type }}</a></h2>
             <!--replace # with the google maps api-->
             <h2><a class="article-title" href="#">{{ 'Location: ' ~ req.hospital_urgent_request.street ~ ' ' ~ req.hospital_urgent_request.city ~ ', ' ~ req.hospital_urgent_request.country }}</a></h2>
 
@@ -21,7 +20,7 @@
           <div>
             {% if current_user.is_authenticated %}
                 {% if session.get('user_type') == 'donor' %}
-                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('urgent_donation', don_request_id=request.hospital_urgent_request.id) }}">Donate Now</a>
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('urgent_donation', don_request_id=req.hospital_urgent_request.id) }}">Donate Now</a>
                 {% endif %}
             {% else %}
             {% endif %}

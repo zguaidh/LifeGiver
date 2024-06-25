@@ -14,7 +14,6 @@
                 {% endif %}
             </div>
             <h2><a class="article-title" href="#">{{ 'Blood type: ' ~ request.blood_type }}</a></h2>
-            <h2 class="article-title" >{{ 'Request status: ' ~ request.status }}</a></h2>
             <!--replace # with the google maps api-->
             <h2><a class="article-title" href="#">{{ 'Location: ' ~ request.hospital_request.street ~ ' ' ~ request.hospital_request.city ~ ', ' ~ request.hospital_request.country }}</a></h2>
 
@@ -31,6 +30,7 @@
             {% endif %}
           </div>
         </article>
+
         <!-- Modal to show an alert to confirm befor deleting-->
 
         <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">

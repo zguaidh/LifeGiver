@@ -1,7 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
     {% for request in requests.items %}
-      {% if request.status == 'pending' %}
 
         <article class="media content-section">
           <div class="media-body">
@@ -18,18 +17,6 @@
             <p class="article-content">{{ 'Expiration date: ' ~ request.expiration_date.strftime('%Y-%m-%d') }}</p>
           </div>
 
-          <!-- A condition to show the button just when the user is a donor-->
-          <div>
-            {% if current_user.is_authenticated %}
-                {% if session.get('user_type') == 'donor' %}
-                  <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('schedule_donation', don_request_id=request.id) }}">Schedule Donation</a>
-                {% endif %}
-            {% else %}
-            {% endif %}
-
-  {% endif %}
-            
-          </div>
          
     {% endfor %}
     

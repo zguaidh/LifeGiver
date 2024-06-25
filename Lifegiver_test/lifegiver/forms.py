@@ -8,7 +8,9 @@ from lifegiver.models import Donor, Hospital
 from flask_login import current_user
 
 class DonorRegistrationForm(FlaskForm):
-    username = StringField('Username',
+    first_name = StringField('First Name',
+                           validators=[DataRequired(), Length(min=2, max=20)])
+    last_name = StringField('Last Name',
                            validators=[DataRequired(), Length(min=2, max=20)])
     email = StringField('Email',
                         validators=[DataRequired(), Email()])
@@ -20,7 +22,7 @@ class DonorRegistrationForm(FlaskForm):
 
     age = IntegerField('Age', validators=[DataRequired()])
     phone_number = StringField('Phone Number', validators=[DataRequired(), Length(min=10, max=45)])
-    blood_type = SelectField('Blood Type', choices=[('O-', 'O-'), ('O+', 'O+'), ('A-', 'A-'), ('A+', 'A+'), ('B-', 'B-'), ('B-', 'B+'), ('AB-', 'AB-'), ('AB+', 'AB+')], validators=[DataRequired()])
+    blood_type = SelectField('Blood Type', choices=[('O-', 'O-'), ('O+', 'O+'), ('A-', 'A-'), ('A+', 'A+'), ('B-', 'B-'), ('B+', 'B+'), ('AB-', 'AB-'), ('AB+', 'AB+')], validators=[DataRequired()])
     street = StringField('Street', validators=[DataRequired(), Length(max=500)])
     city = StringField('City', validators=[DataRequired(), Length(max=100)])
     province = StringField('Province', validators=[DataRequired(), Length(max=100)])
@@ -30,10 +32,10 @@ class DonorRegistrationForm(FlaskForm):
 
     submit = SubmitField('Sign Up')
 
-    def validate_username(self, username):
-        donor = Donor.query.filter_by(username=username.data).first()
+    def validate_national_id(self, national_id):
+        donor = Donor.query.filter_by(national_id=national_id.data).first()
         if donor:
-            raise ValidationError('That username is taken. Please choose a different one.')
+            raise ValidationError('This National ID is already in use. Please verify for any errors')
 
     def validate_email(self, email):
         donor = Donor.query.filter_by(email=email.data).first()
@@ -79,9 +81,9 @@ class HospitalRegistrationForm(FlaskForm):
     zip_code = StringField('Zip Code', validators=[DataRequired(), Length(max=45)])
     country = StringField('Country', validators=[DataRequired(), Length(max=100)])
     remember = BooleanField('Remember Me')
-    submit = SubmitField('Login')
+    submit = SubmitField('Register')
     
-# to prevent the "IntegrityError" when trying to log with an existing email:
+# to prevent the "IntegrityError" when trying to log with an existing name or email:
     def validate_username(self, username):
         donor = Hospital.query.filter_by(name=username.data).first()
         if donor:
@@ -95,13 +97,15 @@ class HospitalRegistrationForm(FlaskForm):
 
 
 class DonorUpdatingForm(FlaskForm):
-    username = StringField('Username',
+    first_name = StringField('First Name',
+                           validators=[DataRequired(), Length(min=2, max=20)])
+    last_name = StringField('Last Name',
                            validators=[DataRequired(), Length(min=2, max=20)])
     email = StringField('Email',
                         validators=[DataRequired(), Email()])
     age = IntegerField('Age', validators=[DataRequired()])
     phone_number = StringField('Phone Number', validators=[DataRequired(), Length(min=10, max=45)])
-    blood_type = SelectField('Blood Type', choices=[('O-', 'O-'), ('O+', 'O+'), ('A-', 'A-'), ('A+', 'A+'), ('B-', 'B-'), ('B-', 'B+'), ('AB-', 'AB-'), ('AB+', 'AB+')], validators=[DataRequired()])
+    blood_type = SelectField('Blood Type', choices=[('O-', 'O-'), ('O+', 'O+'), ('A-', 'A-'), ('A+', 'A+'), ('B-', 'B-'), ('B+', 'B+'), ('AB-', 'AB-'), ('AB+', 'AB+')], validators=[DataRequired()])
     street = StringField('Street', validators=[DataRequired(), Length(max=500)])
     city = StringField('City', validators=[DataRequired(), Length(max=100)])
     province = StringField('Province', validators=[DataRequired(), Length(max=100)])
@@ -132,25 +136,25 @@ class HospitalUpdatingForm(FlaskForm):
 
     def validate_username(self, username):
         # check if the updated username is different than the current username
-        if username.data != current_user.username:
-            # check if the username is already used
-            donor = Donor.query.filter_by(username=username.data).first()
-            if donor:
-                raise ValidationError('That username is taken. Please choose a different one.')
+        if username.data != current_user.name:
+            # check if the name is already used
+            hospital = Hospital.query.filter_by(name=username.data).first()
+            if hospital:
+                raise ValidationError('That Name is taken. Please choose a different one.')
 
     def validate_email(self, email):
         # check if the updated username is different than the current username
         if email.data != current_user.email:
-            # check if the username is already used
-            donor = Donor.query.filter_by(email=email.data).first()
-            if donor:
+            # check if the mail is already used
+            hospital = Hospital.query.filter_by(email=email.data).first()
+            if hospital:
                 raise ValidationError('That email is taken. Please choose a different one.')
             
 # Form for the CRUD operations of donation requests
 class CRUDRequestForm(FlaskForm):
     hospital_id = StringField('Hospital ID', validators=[DataRequired()])
     # to change later to be a selectfield later
-    blood_type = SelectField('Blood Type', choices=[('O-', 'O-'), ('O+', 'O+'), ('A-', 'A-'), ('A+', 'A+'), ('B-', 'B-'), ('B-', 'B+'), ('AB-', 'AB-'), ('AB+', 'AB+')], validators=[DataRequired()])
+    blood_type = SelectField('Blood Type', choices=[('O-', 'O-'), ('O+', 'O+'), ('A-', 'A-'), ('A+', 'A+'), ('B-', 'B-'), ('B+', 'B+'), ('AB-', 'AB-'), ('AB+', 'AB+')], validators=[DataRequired()])
     request_date = DateTimeField('Request Date', default=datetime.now, validators=[DataRequired()])
     status = SelectField('Status', choices=[('pending', 'Pending'), ('fulfilled', 'Fulfilled'), ('failed', 'Failed')], validators=[DataRequired()])
     expiration_date = DateTimeField('Expiration Date', validators=[DataRequired()])
@@ -160,7 +164,7 @@ class CRUDRequestForm(FlaskForm):
 class CRUDUrgentRequestForm(FlaskForm):
     hospital_id = StringField('Hospital ID', validators=[DataRequired()])
     # to change later to be a selectfield later
-    blood_type = SelectField('Blood Type', choices=[('O-', 'O-'), ('O+', 'O+'), ('A-', 'A-'), ('A+', 'A+'), ('B-', 'B-'), ('B-', 'B+'), ('AB-', 'AB-'), ('AB+', 'AB+')], validators=[DataRequired()])
+    blood_type = SelectField('Blood Type', choices=[('O-', 'O-'), ('O+', 'O+'), ('A-', 'A-'), ('A+', 'A+'), ('B-', 'B-'), ('B+', 'B+'), ('AB-', 'AB-'), ('AB+', 'AB+')], validators=[DataRequired()])
     request_date = DateTimeField('Request Date', default=datetime.now, validators=[DataRequired()])
     expiration_date = DateTimeField('Expiration Date', validators=[DataRequired()])
     submit = SubmitField('Submit  Urgent Request')
