@@ -1,7 +1,8 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h1 class="mb-3">Requested by {{ hospital.name }} ({{ requests.total }})</h1>
+    <h1 class="mb-3">Requested by {{ hospital.name }} </h1>
     {% for req in requests.items %}
+    {% if req.status == 'pending' %}
         <article class="media content-section">
           <div class="media-body">
             <div class="article-metadata">
@@ -28,7 +29,9 @@
             
           </div>
         </article>
-    {% endfor %}
+        {% endif %}
+        {% endfor %}
+    
     
     {% for page_num in requests.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=1) %}
       {% if page_num %}

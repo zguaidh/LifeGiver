@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% block content %}
+    {% for don in donations.items %}
+
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+               
+              <a class="mr-2" href="#">{{ don.hospital_donation.name }}</a> <!--using the backref : hospital-->              
+              <small class="text-muted">{{ don.donation_request.request_date.strftime('%Y-%m-%d') }}</small>
+            </div>
+            <h2><a class="article-title" href="#">{{ 'Blood type: ' ~ don.donation_request.blood_type }}</a></h2>
+
+            <!--replace # with the google maps api-->
+            <h2><a class="article-title" href="#">{{ 'Location: ' ~ don.hospital_donation.street ~ ' ' ~ don.hospital_donation.city ~ ', ' ~ don.hospital_donation.country }}</a></h2>
+
+            <p class="article-content">{{ 'Donation date: ' ~ don.donation_date.strftime('%Y-%m-%d') }}</p>
+          </div>
+
+         
+    {% endfor %}
+    
+    {% for page_num in donations.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=1) %}
+      {% if page_num %}
+        {% if donations.page == page_num %} <!--adding a conditional to show on which page we are currently-->
+          <a class="btn btn-info mb-4" href="{{ url_for('donation_history', donor_id=donor_id, page=page_num) }}">{{ page_num }}</a>
+        {% else %}
+          <a class="btn btn-outline-info mb-4" href="{{ url_for('donation_history', donor_id=donor_id, page=page_num) }}">{{ page_num }}</a>
+        {% endif %}
+      {% else %}
+        ...
+      {% endif %}
+    {% endfor %}
+{% endblock content %}

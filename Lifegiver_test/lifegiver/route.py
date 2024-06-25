@@ -36,7 +36,8 @@ def new_donor():
     form = DonorRegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        donor = Donor(username=form.username.data,
+        donor = Donor(first_name=form.first_name.data,
+                     last_name=form.last_name.data,
                      email=form.email.data,
                      password=hashed_password,
                      age=form.age.data,
@@ -50,7 +51,7 @@ def new_donor():
                      national_id=form.national_id.data)
         db.session.add(donor)
         db.session.commit()
-        flash(f'Acount created for {form.username.data}!', 'success')
+        flash(f'Acount created for {form.first_name.data} {form.last_name.data}!', 'success')
         return redirect(url_for('existing_donor'))
     return render_template('new_donor.html', title='New Donor registration', form=form)
 
@@ -75,7 +76,6 @@ def existing_donor():
 # method to make serial numbers:
 def make_serial(count):
     all_char = string.ascii_letters + string.digits
-    chars_count = len(all_char)
     serial_list = []
     while count > 0:
         random_number = random.randint(0, len(all_char) - 1)
@@ -90,11 +90,12 @@ def send_barcode_email(user, barcode):
                   recipients=[user.email]) # reset the sender to the email comming from the domain later
     msg.body = f'''Dear {user.name},
 Your account has been created successfully.
-Your serial number is:  {barcode}.
+Your serial number is:  {barcode}
 Please keep this serial number safe, as you will need it to log in.
 
 Login now : {url_for('hospital_login', _external=True)}
 '''
+    msg.charset = 'utf-8'
     mail.send(msg)
 
 # route for hospital registration:
@@ -180,7 +181,8 @@ def donor_dashboard():
             picture_File = save_picture(form.picture.data)
             current_user.image_file = picture_File
 
-        current_user.username = form.username.data
+        current_user.first_name = form.first_name.data
+        current_user.last_name = form.last_name.data
         current_user.email=form.email.data
         current_user.age=form.age.data
         current_user.phone_number=form.phone_number.data
@@ -196,7 +198,8 @@ def donor_dashboard():
         return redirect(url_for('donor_dashboard'))
     # to make sure that the form will be populated with the existing data
     elif request.method == 'GET':
-        form.username.data = current_user.username
+        form.first_name.data = current_user.first_name
+        form.last_name.data = current_user.last_name
         form.email.data=current_user.email
         form.age.data=current_user.age
         form.phone_number.data=current_user.phone_number
@@ -282,8 +285,8 @@ def new_request():
 @app.route('/requests', methods=['POST', 'GET'], strict_slashes=False)
 def requests():
     page = request.args.get('page', 1, type=int)
-    # we are going to use the query query.order_by(DonationRequest.request_date.desc()) to order our requests by date
-    requests = DonationRequest.query.order_by(DonationRequest.request_date.desc()).paginate(page=page, per_page=5) # inteade of using .all() we gonna change it to .paginate() to get 10 requests per page
+    # we are going to use the query query.order_by(DonationRequest.request_date.asc()) to order our requests by date
+    requests = DonationRequest.query.order_by(DonationRequest.request_date.asc()).paginate(page=page, per_page=5) # inteade of using .all() we gonna change it to .paginate() to get 10 requests per page
 
     return render_template('requests.html', title='Donation Requests page', requests=requests)
 
@@ -345,10 +348,10 @@ def delete_don_request(don_request_id):
 def hospital_requests(name):
     page = request.args.get('page', 1, type=int)
     hospital = Hospital.query.filter_by(name=name).first_or_404()
-    # we are going to use the query query.order_by(DonationRequest.request_date.desc()) to order our requests by date
+    # we are going to use the query query.order_by(DonationRequest.request_date.asc()) to order our requests by date
     # also using the backref hospital_request
     hospital_requests = DonationRequest.query.filter_by(hospital_request=hospital)\
-            .order_by(DonationRequest.request_date.desc())\
+            .order_by(DonationRequest.request_date.asc())\
             .paginate(page=page, per_page=5) # inteade of using .all() we gonna change it to .paginate() to get 10 requests per page
 
     return render_template('hospital_requests.html', title='Hospital Requests page', requests=hospital_requests, hospital=hospital)
@@ -386,8 +389,8 @@ def new_urgent_request():
 @app.route('/urgent_requests', methods=['POST', 'GET'], strict_slashes=False)
 def urgent_requests():
     page = request.args.get('page', 1, type=int)
-    # we are going to use the query query.order_by(DonationRequest.request_date.desc()) to order our requests by date
-    requests = UrgentRequest.query.order_by(UrgentRequest.request_date.desc()).paginate(page=page, per_page=5) # inteade of using .all() we gonna change it to .paginate() to get 10 requests per page
+    # we are going to use the query query.order_by(DonationRequest.request_date.asc()) to order our requests by date
+    requests = UrgentRequest.query.order_by(UrgentRequest.request_date.asc()).paginate(page=page, per_page=5) # inteade of using .all() we gonna change it to .paginate() to get 10 requests per page
     # dont forget the display the list in the homa page banner
     return render_template('urgent_requests.html', title='Urgent Requests page', requests=requests)
 
@@ -405,7 +408,7 @@ def urgent_don_request(urgent_request_id):
 def update_urgent_request(urgent_request_id):
 # replaced by the next line to manage also a 404 error when the request is not found
 #    don_request = DonationRequest.query.get(urgent_request_id)
-    donrequest = DonationRequest.query.get_or_404(urgent_request_id)
+    donrequest = UrgentRequest.query.get_or_404(urgent_request_id)
     # give permission of updating just for the user who created the don_request
     if session.get('user_type') != 'hospital' or donrequest.hospital_id != current_user.id:
         abort(403)
@@ -417,7 +420,7 @@ def update_urgent_request(urgent_request_id):
         donrequest.expiration_date=form.expiration_date.data
         db.session.commit()
         flash('Your Urgent Request has been updated!', 'success')
-        return redirect(url_for('urgent_request', urgent_request_id=donrequest.id))
+        return redirect(url_for('urgent_requests', urgent_request_id=donrequest.id))
     elif request.method == 'GET':
     # managed to populate the forms with data
         form.hospital_id.data=current_user.barcode
@@ -432,7 +435,7 @@ def update_urgent_request(urgent_request_id):
 @app.route('/urgent_request/<int:urgent_request_id>/delete', methods=['POST'], strict_slashes=False)
 @login_required
 def delete_urgent_request(urgent_request_id):
-    donrequest = DonationRequest.query.get_or_404(urgent_request_id)
+    donrequest = UrgentRequest.query.get_or_404(urgent_request_id)
     # Ensure only the hospital that created the urgent request can delete it
     if session.get('user_type') != 'hospital' or donrequest.hospital_id != current_user.id:
         abort(403)
@@ -442,17 +445,17 @@ def delete_urgent_request(urgent_request_id):
     return redirect(url_for('urgent_requests'))
 
 # route to get all the urgent requests posted by a specifique hospital when clicking on the hospital's name
-@app.route('/hospital/<string:name>', methods=['POST', 'GET'], strict_slashes=False)
+@app.route('/hospital_urgent/<string:name>', methods=['POST', 'GET'], strict_slashes=False)
 def hospital_urgent_requests(name):
     page = request.args.get('page', 1, type=int)
     hospital = Hospital.query.filter_by(name=name).first_or_404()
-    # we are going to use the query query.order_by(DonationRequest.request_date.desc()) to order our requests by date
+    # we are going to use the query query.order_by(DonationRequest.request_date.asc()) to order our requests by date
     # also using the backref hospital_request
-    hospital_requests = UrgentRequest.query.filter_by(hospital_request=hospital)\
-            .order_by(UrgentRequest.request_date.desc())\
+    hospital_urg_requests = UrgentRequest.query.filter_by(hospital_id=hospital.id)\
+            .order_by(UrgentRequest.request_date.asc())\
             .paginate(page=page, per_page=5) # inteade of using .all() we gonna change it to .paginate() to get 10 requests per page
 
-    return render_template('hospital_urgent_requests.html', title='Hospital Urgent Requests page', requests=hospital_requests, hospital=hospital)
+    return render_template('hospital_urgent_requests.html', title='Hospital Urgent Requests', requests=hospital_urg_requests, hospital=hospital)
 
 
 
@@ -525,7 +528,7 @@ def send_urg_donation_don_email(user, request, hospital, user_donation):
     msg = Message(' Donation Confirmation',
                   sender='noreply.lifegiver@gmail.com',
                   recipients=[user.email]) # reset the sender to the email comming from the domain later
-    msg.body = f'''Dear {user.username},
+    msg.body = f'''Dear {user.first_name},
 
 Thank you for your generous decision to donate blood. Here are the details of your donation:
 
@@ -574,7 +577,7 @@ def urgent_donation(don_request_id):
     urgent_request = UrgentRequest.query.get(don_request_id)
 
     hospital = urgent_request.hospital_urgent_request
-    current_user.increment_donation_count()
+#    current_user.increment_donation_count()
     send_urg_donation_hos_email(hospital, don_request_id)
     
     return render_template("urgent_donation.html", title='Donating page', urgent_request=urgent_request)
@@ -585,7 +588,7 @@ def send_donation_don_email(user, request, hospital, user_donation):
     msg = Message(' Donation Confirmation',
                   sender='noreply.lifegiver@gmail.com',
                   recipients=[user.email]) # reset the sender to the email comming from the domain later
-    msg.body = f'''Dear {user.username},
+    msg.body = f'''Dear {user.first_name},
 
 Thank you for your generous decision to donate blood. Here are the details of your donation:
 
@@ -673,4 +676,31 @@ def donation(don_request_id):
     send_donation_hos_email(hospital, don_request_id, user_donation)
     send_donation_don_email(current_user, don_request, hospital, user_donation)
     return render_template("donation.html", title='Donating page', don_request=don_request, user_donation=user_donation)
+
+
+#  a route to the history of all the requests
+@app.route('/requests_history/<string:name>', methods=['POST', 'GET'], strict_slashes=False)
+def requests_history(name):
+    page = request.args.get('page', 1, type=int)
+    hospital = Hospital.query.filter_by(name=name).first_or_404()
+    # we are going to use the query query.order_by(DonationRequest.request_date.desc()) to order our requests by date
+    # also using the backref hospital_request
+    hospital_requests = DonationRequest.query.filter_by(hospital_request=hospital)\
+            .order_by(DonationRequest.request_date.desc())\
+            .paginate(page=page, per_page=5) # inteade of using .all() we gonna change it to .paginate() to get 10 requests per page
+
+    return render_template('requests_history.html', title='All Hospital Requests', requests=hospital_requests, hospital=hospital)
+
+#  a route to the history of all a user donations
+@app.route('/donation_history/<int:donor_id>', methods=['POST', 'GET'], strict_slashes=False)
+def donation_history(donor_id):
+    page = request.args.get('page', 1, type=int)
+    donor = Donor.query.filter_by(id=donor_id).first_or_404()
+    # we are going to use the query query.order_by(DonationRequest.request_date.desc()) to order our requests by date
+    # also using the backref hospital_request
+    user_donations = UserDonation.query.filter_by(donor_id=donor_id)\
+            .order_by(UserDonation.donation_date.desc())\
+            .paginate(page=page, per_page=5) # inteade of using .all() we gonna change it to .paginate() to get 10 requests per page
+
+    return render_template('donation_history.html', title='All User Donations', donations=user_donations, donor_id=donor_id)
 

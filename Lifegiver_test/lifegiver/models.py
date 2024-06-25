@@ -22,7 +22,8 @@ class Donor(db.Model, UserMixin):
     __tablename__ = 'donor'
     
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(100), nullable=False)
+    first_name = db.Column(db.String(100), nullable=False)
+    last_name = db.Column(db.String(100), nullable=False)
     password = db.Column(db.String(60), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
@@ -77,9 +78,9 @@ class Donor(db.Model, UserMixin):
         return Donor.query.get(user_id)
 
     def __repr__(self):
-        return f"User('{self.username}', '{self.email}', '{self.image_file}')"
+        return f"User('{self.first_name}', '{self.last_name}', '{self.email}', '{self.image_file}')"
     def __repr__(self):
-        return f"Donor(id={self.id}, username='{self.username}', email='{self.email}', image_file='{self.image_file}', blood_type='{self.blood_type}', donation_count={self.donation_count})"
+        return f"Donor(id={self.id}, first_name='{self.first_name}', last_name='{self.last_name}', email='{self.email}', image_file='{self.image_file}', blood_type='{self.blood_type}', donation_count={self.donation_count})"
 
 class Hospital(db.Model, UserMixin):
     __tablename__ = 'hospital'
@@ -109,7 +110,7 @@ class Hospital(db.Model, UserMixin):
     urgent_requests = db.relationship('UrgentRequest', backref='hospital_urgent_request', lazy=True)
 
     def __repr__(self):
-        return f"Hospital(id={self.id}, barcode='{self.barcode}')"
+        return f"Hospital(id={self.id}, barcode='{self.barcode}', email='{self.email}')"
 
 class UserDonation(db.Model):
     

@@ -24,6 +24,7 @@ app.config['MAIL_USE_TLS'] = True
 # hidding the email and password in an environement variable
 app.config['MAIL_USERNAME'] = os.environ.get('EMAIL_USER')
 app.config['MAIL_PASSWORD'] = os.environ.get('EMAIL_PASS')
+app.config['MAIL_DEFAULT_CHARSET'] = 'utf-8'
 # we should initialize the extension after setting the five configurations
 mail = Mail(app)
 
