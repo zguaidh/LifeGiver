@@ -105,6 +105,7 @@ def hospital_registration():
         return redirect(url_for('hospital_dashboard'))
      form = HospitalRegistrationForm()
      if form.validate_on_submit():
+        # check if the name of the hospital exists in our database
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         barcode = make_serial(15)
         hospital = Hospital(name=form.name.data,
@@ -134,10 +135,7 @@ def hospital_login():
         return redirect(url_for('hospital_dashboard'))
      form = HospitalLoginForm()
      if form.validate_on_submit():
-#        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-#        hospital = Hospital(barcode=form.barcode.data, password=hashed_password)
-#        db.session.add(hospital)
-#        db.session.commit()
+
         hospital = Hospital.query.filter_by(barcode=form.barcode.data).first()
         if hospital and bcrypt.check_password_hash(hospital.password, form.password.data):
             login_user(hospital, remember=form.remember.data)
@@ -522,8 +520,36 @@ def reset_token(token):
     return render_template('reset_token.html', title='Reset Password', form=form)
 
 
+# send a msg to the donor
+def send_urg_donation_don_email(user, request, hospital, user_donation):
+    msg = Message(' Donation Confirmation',
+                  sender='noreply.lifegiver@gmail.com',
+                  recipients=[user.email]) # reset the sender to the email comming from the domain later
+    msg.body = f'''Dear {user.username},
+
+Thank you for your generous decision to donate blood. Here are the details of your donation:
+
+Hospital: {hospital.name}
+Location: {hospital.street}, {hospital.city}, {hospital.province}, {hospital.zip_code}, {hospital.country}
+Phone: {hospital.phone_number}
+Email: {hospital.email}
+
+Donation Request Information:
+- Blood Type: {request.blood_type}
+- Request Date: {request.request_date}
+- Expiration Date: {request.expiration_date}
+
+Please ensure that you arrive at the hospital at {user_donation.donation_date}. If you have any questions or need to reschedule, feel free to contact the hospital directly.
+
+Thank you for using LifeGiver!
+
+{url_for('home', _external=True)}
+'''
+    mail.send(msg)
+
+
 # send a msg to the hospital
-def send_urg_donation_email(user, request_id):
+def send_urg_donation_hos_email(user, request_id):
     msg = Message(' Your Donation Request has been approved',
                   sender='noreply.lifegiver@gmail.com',
                   recipients=[user.email]) # reset the sender to the email comming from the domain later
@@ -548,10 +574,59 @@ def urgent_donation(don_request_id):
     urgent_request = UrgentRequest.query.get(don_request_id)
 
     hospital = urgent_request.hospital_urgent_request
-    send_urg_donation_email(hospital, don_request_id)
+    current_user.increment_donation_count()
+    send_urg_donation_hos_email(hospital, don_request_id)
     
     return render_template("urgent_donation.html", title='Donating page', urgent_request=urgent_request)
 
+
+# send a msg to the donor
+def send_donation_don_email(user, request, hospital, user_donation):
+    msg = Message(' Donation Confirmation',
+                  sender='noreply.lifegiver@gmail.com',
+                  recipients=[user.email]) # reset the sender to the email comming from the domain later
+    msg.body = f'''Dear {user.username},
+
+Thank you for your generous decision to donate blood. Here are the details of your donation:
+
+Hospital: {hospital.name}
+Location: {hospital.street}, {hospital.city}, {hospital.province}, {hospital.zip_code}, {hospital.country}
+Phone: {hospital.phone_number}
+Email: {hospital.email}
+
+Donation Request Information:
+- Blood Type: {request.blood_type}
+- Request Date: {request.request_date}
+- Expiration Date: {request.expiration_date}
+
+Please ensure that you arrive at the hospital at {user_donation.donation_date}. If you have any questions or need to reschedule, feel free to contact the hospital directly.
+
+Thank you for using LifeGiver!
+
+{url_for('home', _external=True)}
+'''
+    mail.send(msg)
+
+
+# send a msg to the hospital
+def send_donation_hos_email(user, request_id, user_donation):
+    msg = Message(' Your Donation Request has been approved',
+                  sender='noreply.lifegiver@gmail.com',
+                  recipients=[user.email]) # reset the sender to the email comming from the domain later
+    msg.body = f'''Dear {user.name},
+
+Your urgent request has been approved by a Donor.
+
+Please ensure that you are prepared to receive the donor at {user_donation.donation_date} and facilitate the donation process.
+
+We kindly remind you to update the donation request information after the  the donation has been completed.
+
+{url_for('update_urgent_request', urgent_request_id=request_id, _external=True)}
+
+Thank you for using LifeGiver!
+{url_for('home', _external=True)}
+'''
+    mail.send(msg)
 
 @app.route("/schedule_donation/<int:don_request_id>", methods=['GET', 'POST'], strict_slashes=False)
 @login_required
@@ -559,31 +634,43 @@ def schedule_donation(don_request_id):
     don_request = DonationRequest.query.get_or_404(don_request_id)
     form = UserDonationForm()
     if form.validate_on_submit():
+        print("Form is validated and ready for submission.")
         user_donation =UserDonation(
             donation_date=form.donation_date.data,
-            status='requested',
             donor_id=current_user.id,
             request_id=don_request.id,
             hospital_id=don_request.hospital_request.id
         )
         db.session.add(user_donation)
-        db.session.commit()
-        current_user.increment_donation_count()
-        flash('Your donation session has been booked in the hospital', 'success')
-        return redirect(url_for('donation', don_request_id=don_request_id))
-    elif request.method == 'GET':
+        try:
+            db.session.commit()
+            print("Database commit successful.")
+            current_user.increment_donation_count()
+            print(current_user.donation_count)
+            flash('Your donation session has been booked in the hospital', 'success')
+            return redirect(url_for('donation', don_request_id=don_request_id))
+        except Exception as e:
+            db.session.rollback()
+            print(f"Error committing to the database: {e}")
+            flash('An error occurred while scheduling your donation. Please try again.', 'danger')
+    
+    else:
+        if request.method == 'POST':
+            print("Form validation failed")
+            print(form.errors)
         form.donation_date.data=datetime.now()
+    
+
     return render_template("schedule_donation.html", title='Schedule Donation', don_request=don_request, form=form)
 
 
 @app.route("/donation/<int:don_request_id>", methods=['GET', 'POST'], strict_slashes=False)
 @login_required
 def donation(don_request_id):
-    don_request = DonationRequest.query.get(don_request_id)
-
-#    hospital = request.hospital_urgent_request
-#    send_urg_donation_email(hospital, don_request_id)
-#    user_donation = UserDonation.query.filer_by(request_id=don_request_id)
-    
-    return render_template("donation.html", title='Donating page', don_request=don_request)
+    don_request = DonationRequest.query.get_or_404(don_request_id)
+    hospital = don_request.hospital_request
+    user_donation = UserDonation.query.get(don_request_id)
+    send_donation_hos_email(hospital, don_request_id, user_donation)
+    send_donation_don_email(current_user, don_request, hospital, user_donation)
+    return render_template("donation.html", title='Donating page', don_request=don_request, user_donation=user_donation)
 

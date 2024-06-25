@@ -10,17 +10,17 @@
                 </div>
                 <div class="card-body">
                         <h4 class="mb-3">To donate, please head to:</h4> <!-- Instruction to the donor -->
-                        <h3 class="text-primary">{{ don_request.hospital_request.name }}</h3> <!-- Display hospital name -->
+                        <h3 class="text-primary">{{ don_request.hospital_request.name ~ ' ' ~ 'at ' ~ user_donation.donation_date }}</h3> <!-- Display hospital name -->
                         <hr> <!-- Horizontal line for separation -->
                         <h4>Location:</h4> <!-- Label for location details -->
                         <p class="mb-2">
-                            {{ don_request.hospital_request.street }}, {{ don_request.hospital_urgent_request.city }}, {{ don_request.hospital_urgent_request.province }}, {{ don_request.hospital_urgent_request.country }}
+                            {{ don_request.hospital_request.street }}, {{ don_request.hospital_request.city }}, {{ don_request.hospital_request.province }}, {{ don_request.hospital_request.country }}
                         </p> <!-- Display hospital's street, city, province, and country -->
                         <p class="mb-2">
-                            Postal Code: {{ don_request.hospital_urgent_request.zip_code }}
+                            Postal Code: {{ don_request.hospital_request.zip_code }}
                         </p> <!-- Display hospital's postal code -->
                         <p>
-                            Phone Number: {{ don_request.hospital_urgent_request.phone_number }}
+                            Phone Number: {{ don_request.hospital_request.phone_number }}
                         </p> <!-- Display hospital's phone number -->
                         <hr> <!-- Horizontal line for separation -->
                         <h4>Request Details:</h4> <!-- Label for request details -->
