@@ -21,8 +21,14 @@
          
             <p class="article-content">{{ 'Expiration date: ' ~ request.expiration_date.strftime('%Y-%m-%d') }}</p>
           </div>
+          <!-- A condition to show the button just when the user is a donor-->
           <div>
-            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('urgent_donation', don_request_id=request.hospital_urgent_request.id) }}">Donate</a>
+            {% if current_user.is_authenticated %}
+                {% if session.get('user_type') == 'donor' %}
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('urgent_donation', don_request_id=request.hospital_urgent_request.id) }}">Donate Now</a>
+                {% endif %}
+            {% else %}
+            {% endif %}
           </div>
         </article>
         <!-- Modal to show an alert to confirm befor deleting-->
