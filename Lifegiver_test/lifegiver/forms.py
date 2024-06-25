@@ -185,7 +185,6 @@ class ResetPasswordForm(FlaskForm):
 
 class UserDonationForm(FlaskForm):
     donation_date = DateTimeField('Donation Date', default=datetime.now, validators=[DataRequired()])
-    status = SelectField('Status', choices=[('requested', 'Requested'), ('voluntary', 'Voluntary')], validators=[DataRequired()])
     submit = SubmitField('Donate Now')
 
     

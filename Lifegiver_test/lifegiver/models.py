@@ -82,6 +82,8 @@ class Donor(db.Model, UserMixin):
         return f"Donor(id={self.id}, username='{self.username}', email='{self.email}', image_file='{self.image_file}', blood_type='{self.blood_type}', donation_count={self.donation_count})"
 
 class Hospital(db.Model, UserMixin):
+    __tablename__ = 'hospital'
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(225), nullable=False)
 #    address = db.Column(db.String(500), nullable=False)
@@ -110,15 +112,15 @@ class Hospital(db.Model, UserMixin):
         return f"Hospital(id={self.id}, barcode='{self.barcode}')"
 
 class UserDonation(db.Model):
+    
     id = db.Column(db.Integer, primary_key=True)
     donation_date = db.Column(db.DateTime, nullable=False, default=datetime.now)
-    status = db.Column(db.Enum('requested', 'voluntary'), nullable=False)
     donor_id = db.Column(db.Integer, db.ForeignKey('donor.id'), nullable=False)
     request_id = db.Column(db.Integer, db.ForeignKey('donation_request.id'), nullable=True)
     hospital_id = db.Column(db.Integer, db.ForeignKey('hospital.id'), nullable=False)
 
     def __repr__(self):
-        return f"Donation(id={self.id}, donation_date='{self.donation_date}', status='{self.status}', donor_id={self.donor_id}, hospital_id={self.hospital_id})"
+        return f"Donation(id={self.id}, donation_date='{self.donation_date}', donor_id={self.donor_id}, hospital_id={self.hospital_id})"
     
 class DonationRequest(db.Model):
     id = db.Column(db.Integer, primary_key=True)
