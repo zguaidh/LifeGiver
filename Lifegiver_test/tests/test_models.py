@@ -35,7 +35,23 @@ class TestModels(unittest.TestCase):
         saved_hospital = Hospital.query.filter_by(name='Test Hospital').first()
         self.assertIsNotNone(saved_hospital)
         self.assertEqual(saved_hospital.email, 'hospital@example.com')
+    def test_invalid_donor_creation(self):
+        # Invalid email
+        donor = Donor(username='testuser', email='invalidemail', password='password', age=25,
+                      phone_number='1234567890', blood_type='O+', street='123 Test St', city='Test City',
+                      province='Test Province', zip_code='12345', country='Test Country', national_id='123456789')
+        with self.assertRaises(ValueError):
+            db.session.add(donor)
+            db.session.commit()
 
+    def test_invalid_hospital_creation(self):
+        # Missing required field (name)
+        hospital = Hospital(email='hospital@example.com', password='password', 
+                            phone_number='1234567890', street='123 Hospital St', city='Hospital City', 
+                            province='Hospital Province', zip_code='12345', country='Hospital Country', barcode='12345')
+        with self.assertRaises(ValueError):
+            db.session.add(hospital)
+            db.session.commit()
     def test_create_user_donation(self):
         donor = Donor(username='testuser', email='test@example.com', password='password', age=25,
                       phone_number='1234567890', blood_type='O+', street='123 Test St', city='Test City',
