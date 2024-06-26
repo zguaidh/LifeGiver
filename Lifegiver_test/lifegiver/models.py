@@ -40,8 +40,12 @@ class Donor(db.Model, UserMixin):
     country = db.Column(db.String(100), nullable=False)
     registration_date = db.Column(db.DateTime, nullable=False, default=datetime.now)
     national_id = db.Column(db.String(45), unique=True, nullable=False)
+    # Tobe able to usr Google Maps APIs
+    lat = db.Column(db.Float, nullable=True)
+    lng = db.Column(db.Float, nullable=True)
     # Implemet the method to increment the count later
     donation_count = db.Column(db.Integer, default=0)
+    # add an attribute for the coordinates as a dictionary
 
     # One Donor has many UserDonations
     donor_donations = db.relationship('UserDonation', backref='donor', lazy=True)
@@ -98,6 +102,10 @@ class Hospital(db.Model, UserMixin):
     email = db.Column(db.String(125), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
     barcode = db.Column(db.String(100), unique=True, nullable=False)
+
+    # Tobe able to usr Google Maps APIs
+    lat = db.Column(db.Float, nullable=True)
+    lng = db.Column(db.Float, nullable=True)
 
     
     # One hospital can have many UserDonations

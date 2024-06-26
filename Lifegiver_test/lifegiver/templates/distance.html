@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Route from {{ donor.first_name }} {{ donor.last_name }} to {{ hospital.name }}</h2>
+    <img src="{{ map_url }}" alt="Route Map" style="width: 100%; max-width: 600px;">
+    <br>
+    <a href="{{ directions_url }}" target="_blank">View Route on Google Maps</a>
+</div>
+{% endblock %}

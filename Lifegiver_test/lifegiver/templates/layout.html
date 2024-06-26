@@ -36,7 +36,7 @@
                     <a class="nav-link" href="{{ url_for('about') }}">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('requests') }}">Requests</a>
+                    <a class="nav-link" href="{{ url_for('don_requests') }}">Requests</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('urgent_requests') }}">Urgent Requests</a>
@@ -54,10 +54,8 @@
                 {% endif %}
                 <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
             {% else %}
-                <a class="btn btn-primary mr-2" href="{{ url_for('new_donor') }}">New Donor</a>
-                <a class="btn btn-secondary mr-2" href="{{ url_for('existing_donor') }}">Existing Donor</a>
-                <a class="btn btn-success" href="{{ url_for('hospital_registration') }}">New Hospital</a>
-                <a class="btn btn-success" href="{{ url_for('hospital_login') }}">Existing Hospital</a>
+                <a class="btn btn-primary mr-2" href="{{ url_for('login') }}">Login</a>
+                <a class="btn btn-success" href="{{ url_for('register') }}">Sign up</a>
                 {% endif %}
             </span>
         </div>
