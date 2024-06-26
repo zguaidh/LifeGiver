@@ -12,7 +12,7 @@
                         <h4 class="mb-3">To donate, please head to:</h4> <!-- Instruction to the donor -->
                         <h3 class="text-primary">{{ don_request.hospital_request.name ~ ' ' ~ 'at ' ~ user_donation.donation_date }}</h3> <!-- Display hospital name -->
                         <hr> <!-- Horizontal line for separation -->
-                        <h4>Location:</h4> <!-- Label for location details -->
+                        <h4><a href="{{ url_for('distance', donor_id=current_user.id, hospital_id=don_request.hospital_request.id) }}">Location:</a></h4> <!-- Label for location details -->
                         <p class="mb-2">
                             {{ don_request.hospital_request.street }}, {{ don_request.hospital_request.city }}, {{ don_request.hospital_request.province }}, {{ don_request.hospital_request.country }}
                         </p> <!-- Display hospital's street, city, province, and country -->

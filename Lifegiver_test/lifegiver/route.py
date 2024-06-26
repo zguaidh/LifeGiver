@@ -15,6 +15,8 @@ from lifegiver import app, db, bcrypt, mail
 from lifegiver.models  import Donor, Hospital, UserDonation, DonationRequest, UrgentRequest
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
+from flask import current_app
+import requests
 
 
 @app.route('/', methods=['POST', 'GET'], strict_slashes=False)
@@ -26,7 +28,28 @@ def home():
 @app.route("/about", methods=['GET'], strict_slashes=False)
 def about():
     return render_template('about.html', title='About page')
+# Method that take the adress and return the latitude and longeture
+def geocode_address(address):
+    print(f"requests type: {type(requests)}") 
+    response = requests.get(
+        'https://maps.googleapis.com/maps/api/geocode/json',
+        params={'address': address, 'key': current_app.config['GOOGLE_MAPS_API_KEY']}
+    )
+    data = response.json()
+    if data['status'] == 'OK':
+        location = data['results'][0]['geometry']['location']
+        return location['lat'], location['lng']
+    return None, None
 
+
+@app.route("/login", methods=['GET'], strict_slashes=False)
+def login():
+    return render_template('login_user_type.html', title='Login')
+
+
+@app.route("/register", methods=['GET'], strict_slashes=False)
+def register():
+    return render_template('register_user_type.html', title='Registration')
 
 
 @app.route('/new_donor', methods=['GET', 'POST'], strict_slashes=False)
@@ -36,6 +59,10 @@ def new_donor():
     form = DonorRegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        address = f"{form.street.data}, {form.city.data}, {form.province.data}, {form.zip_code.data}, {form.country.data}"
+        lat, lng = geocode_address(address)
+        print(f"Address: {address}")
+        print(f"Latitude: {lat}, Longitude: {lng}")
         donor = Donor(first_name=form.first_name.data,
                      last_name=form.last_name.data,
                      email=form.email.data,
@@ -48,9 +75,12 @@ def new_donor():
                      province=form.province.data,
                      zip_code=form.zip_code.data,
                      country=form.country.data,
-                     national_id=form.national_id.data)
+                     national_id=form.national_id.data,
+                     lat=lat,
+                     lng=lng)
         db.session.add(donor)
         db.session.commit()
+     #   print(f"Latitude: {current_user.lat}, Longitude: {current_user.lng}")
         flash(f'Acount created for {form.first_name.data} {form.last_name.data}!', 'success')
         return redirect(url_for('existing_donor'))
     return render_template('new_donor.html', title='New Donor registration', form=form)
@@ -98,6 +128,18 @@ Login now : {url_for('hospital_login', _external=True)}
     msg.charset = 'utf-8'
     mail.send(msg)
 
+def geocode_address(address):
+    print(f"requests type: {type(requests)}") 
+    response = requests.get(
+        'https://maps.googleapis.com/maps/api/geocode/json',
+        params={'address': address, 'key': current_app.config['GOOGLE_MAPS_API_KEY']}
+    )
+    data = response.json()
+    if data['status'] == 'OK':
+        location = data['results'][0]['geometry']['location']
+        return location['lat'], location['lng']
+    return None, None
+
 # route for hospital registration:
 @app.route('/hospital_registration', methods=['GET', 'POST'], strict_slashes=False)
 def hospital_registration():
@@ -109,6 +151,10 @@ def hospital_registration():
         # check if the name of the hospital exists in our database
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         barcode = make_serial(15)
+        address = f"{form.street.data}, {form.city.data}, {form.province.data}, {form.zip_code.data}, {form.country.data}"
+        lat, lng = geocode_address(address)
+        print(f"Address: {address}")
+        print(f"Latitude: {lat}, Longitude: {lng}")
         hospital = Hospital(name=form.name.data,
                      email=form.email.data,
                      password=hashed_password,
@@ -118,7 +164,9 @@ def hospital_registration():
                      province=form.province.data,
                      zip_code=form.zip_code.data,
                      country=form.country.data,
-                     barcode=barcode)
+                     barcode=barcode,
+                     lat=lat,
+                     lng=lng)
         db.session.add(hospital)
         db.session.commit()
         print(hospital.barcode)
@@ -275,15 +323,16 @@ def new_request():
         db.session.add(don_request)
         db.session.commit()
         flash('Your Request has been created!', 'success')
-        return redirect(url_for('requests'))
+        return redirect(url_for('don_requests'))
     elif request.method == 'GET':
         #the name of the field is id but it will show the barcode
         form.hospital_id.data = current_user.barcode
         # add the same line for the name
     return render_template('create_request.html', title='New Request',form=form, legend='Create Request') # the legend keywoed will be used to change the template legend (whether its a new post or an update)
+# route to return all the donation requests
 
-@app.route('/requests', methods=['POST', 'GET'], strict_slashes=False)
-def requests():
+@app.route('/don_requests', methods=['POST', 'GET'], strict_slashes=False)
+def don_requests():
     page = request.args.get('page', 1, type=int)
     # we are going to use the query query.order_by(DonationRequest.request_date.asc()) to order our requests by date
     requests = DonationRequest.query.order_by(DonationRequest.request_date.asc()).paginate(page=page, per_page=5) # inteade of using .all() we gonna change it to .paginate() to get 10 requests per page
@@ -340,7 +389,7 @@ def delete_don_request(don_request_id):
     db.session.delete(donrequest)
     db.session.commit()
     flash('Your request has been deleted!', 'success')
-    return redirect(url_for('requests'))
+    return redirect(url_for('don_requests'))
 
 # route to get all the requests posted by a specifique hospital when clicking on the hospital's barcode
 # change the barcode to the name of hospital later
@@ -704,3 +753,18 @@ def donation_history(donor_id):
 
     return render_template('donation_history.html', title='All User Donations', donations=user_donations, donor_id=donor_id)
 
+
+# route return the location od th ehopital:
+@app.route('/distance/<int:donor_id>/<int:hospital_id>', methods=['GET', 'POST'], strict_slashes=False)
+def distance(donor_id, hospital_id):
+    donor = Donor.query.get_or_404(donor_id)
+    hospital = Hospital.query.get_or_404(hospital_id)
+    
+#    donor_coordinates = (donor.lat, donor.lng)
+#    hospital_coordinates = (hospital.lat, hospital.lng)
+    
+    # Example URL for Google Maps Directions API
+#    directions_url = f"https://www.google.com/maps/dir/?api=1&origin={donor_coordinates[0]},{donor_coordinates[1]}&destination={hospital_coordinates[0]},{hospital_coordinates[1]}&travelmode=driving"
+    directions_url = f"https://www.google.com/maps/dir/?api=1&origin={donor.lat},{donor.lng}&destination={hospital.lat},{hospital.lng}&travelmode=driving"    
+    map_url = f"https://maps.googleapis.com/maps/api/staticmap?size=600x400&markers=color:red%7Clabel:D%7C{donor.lat},{donor.lng}&markers=color:blue%7Clabel:H%7C{hospital.lat},{hospital.lng}&path=color:0x0000ff%7Cweight:5%7C{donor.lat},{donor.lng}%7C{hospital.lat},{hospital.lng}&key={current_app.config['GOOGLE_MAPS_API_KEY']}"
+    return render_template('distance.html', title='Distance Calculation', donor=donor, hospital=hospital, directions_url=directions_url)

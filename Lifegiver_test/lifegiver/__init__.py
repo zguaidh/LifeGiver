@@ -8,6 +8,9 @@ from flask_mail import Mail
 app = Flask(__name__)
 # load it to an environment variable later
 # app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
+
+# export it to an envirenment variable later
+app.config['GOOGLE_MAPS_API_KEY'] = 'AIzaSyAckhaG8lpWrO3lI8shmnOBrTQzeQCV-ew'
 app.config['SECRET_KEY'] = '28b95654638c2558741386d9c6649456b49fcdee5de3616da207cc86f52c2f34'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 db = SQLAlchemy(app)
