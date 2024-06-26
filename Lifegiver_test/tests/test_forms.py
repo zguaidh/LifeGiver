@@ -35,6 +35,27 @@ class TestDonorRegistrationForm(BaseTestCase):
                                      street='456 Test St', city='Test City', province='Test Province', 
                                      zip_code='54321', country='Test Country', national_id='987654321')
         self.assertTrue(form.validate())
+    def test_invalid_donor_registration_form(self):
+        form = DonorRegistrationForm(data={
+            'username': '',  # Missing username
+            'email': 'invalidemail',
+            'password': 'password',
+            'confirm_password': 'differentpassword',
+            'age': 'invalidage',  # Age should be an integer
+            'phone_number': '1234567890',
+            'blood_type': 'O+',
+            'street': '123 Test St',
+            'city': 'Test City',
+            'province': 'Test Province',
+            'zip_code': '12345',
+            'country': 'Test Country',
+            'national_id': '123456789'
+        })
+        self.assertFalse(form.validate())
+        self.assertIn('username', form.errors)
+        self.assertIn('email', form.errors)
+        self.assertIn('confirm_password', form.errors)
+        self.assertIn('age', form.errors)
 
 class TestDonorLoginForm(BaseTestCase):
     def test_donor_login_form(self):
@@ -52,6 +73,24 @@ class TestHospitalRegistrationForm(BaseTestCase):
                                         confirm_password='password', phone_number='1122334455', street='789 Hospital St', 
                                         city='New City', province='New Province', zip_code='67890', country='New Country')
         self.assertTrue(form.validate())
+    def test_invalid_hospital_registration_form(self):
+        form = HospitalRegistrationForm(data={
+            'name': '',  # Missing name
+            'email': 'invalidemail',
+            'password': 'password',
+            'confirm_password': 'differentpassword',
+            'phone_number': '1234567890',
+            'street': '123 Hospital St',
+            'city': 'Hospital City',
+            'province': 'Hospital Province',
+            'zip_code': '12345',
+            'country': 'Hospital Country',
+            'barcode': '12345'
+        })
+        self.assertFalse(form.validate())
+        self.assertIn('name', form.errors)
+        self.assertIn('email', form.errors)
+        self.assertIn('confirm_password', form.errors)
 
 class TestDonorUpdatingForm(BaseTestCase):
     def test_donor_updating_form(self):
