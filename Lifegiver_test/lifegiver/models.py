@@ -84,7 +84,7 @@ class Donor(db.Model, UserMixin):
     def __repr__(self):
         return f"User('{self.first_name}', '{self.last_name}', '{self.email}', '{self.image_file}')"
     def __repr__(self):
-        return f"Donor(id={self.id}, first_name='{self.first_name}', last_name='{self.last_name}', email='{self.email}', image_file='{self.image_file}', blood_type='{self.blood_type}', donation_count={self.donation_count})"
+        return f"Donor(id={self.id}, first_name='{self.first_name}', last_name='{self.last_name}', email='{self.email}', image_file='{self.image_file}', blood_type='{self.blood_type}', donation_count={self.donation_count}, )"
 
 class Hospital(db.Model, UserMixin):
     __tablename__ = 'hospital'

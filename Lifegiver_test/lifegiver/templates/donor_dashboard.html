@@ -10,6 +10,7 @@
       </div>
       <div class="container">
         <h1 class="border-bottom mb-4">Your Donation Count is : <a class="mr-2" href="{{ url_for('donation_history', donor_id=current_user.id) }}">{{ current_user.donation_count }}</a></h1>
+        <h1 class="border-bottom mb-4" > <a class="mr-2" href="{{ url_for('nearby_hospitals', donor_id=current_user.id) }}">View Nearby Hospitals</a></h1>
       </div>
         
     
