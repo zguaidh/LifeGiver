@@ -230,6 +230,8 @@ def donor_dashboard():
             picture_File = save_picture(form.picture.data)
             current_user.image_file = picture_File
 
+        address = f"{form.street.data}, {form.city.data}, {form.province.data}, {form.zip_code.data}, {form.country.data}"
+        lat, lng = geocode_address(address)
         current_user.first_name = form.first_name.data
         current_user.last_name = form.last_name.data
         current_user.email=form.email.data
@@ -242,6 +244,8 @@ def donor_dashboard():
         current_user.zip_code=form.zip_code.data
         current_user.country=form.country.data
         current_user.national_id=form.national_id.data
+        current_user.lat=lat
+        current_user.lng=lng
         db.session.commit()
         flash('Your account has been updated successfuly!', 'success')
         return redirect(url_for('donor_dashboard'))
@@ -270,7 +274,8 @@ def hospital_dashboard():
         if form.picture.data:
             picture_File = save_picture(form.picture.data)
             current_user.image_file = picture_File
-
+        address = f"{form.street.data}, {form.city.data}, {form.province.data}, {form.zip_code.data}, {form.country.data}"
+        lat, lng = geocode_address(address)
         current_user.name = form.name.data
         current_user.email=form.email.data
         current_user.phone_number=form.phone_number.data
@@ -279,6 +284,8 @@ def hospital_dashboard():
         current_user.province=form.province.data
         current_user.zip_code=form.zip_code.data
         current_user.country=form.country.data
+        current_user.lat=lat
+        current_user.lng=lng
         db.session.commit()
         flash('Your account has been updated successfuly!', 'success')
         return redirect(url_for('hospital_dashboard'))
@@ -864,13 +871,57 @@ def nearby_donors(hospital_id, blood_type):
     
     markers = []
     for donor in nearby_donors:
-        markers.append(f"color:red|label:D|{donor.lat},{donor.lng}")
-    markers.append(f"color:blue|label:H|{hospital.lat},{hospital.lng}")
+        markers.append(f"markers=color:red|label:D|{donor.lat},{donor.lng}")
+    markers.append(f"markers=color:blue|label:H|{hospital.lat},{hospital.lng}")
     
     markers_string = "&".join(markers)
+    api_key = current_app.config['GOOGLE_MAPS_API_KEY']
+    
+    # Debugging output
+    print(f"API Key: {api_key}")
+    print(f"Markers: {markers_string}")
+
     map_url = (
-        f"https://maps.googleapis.com/maps/api/staticmap?size=600x400&{markers_string}&"
-        f"key={current_app.config['GOOGLE_MAPS_API_KEY']}"
+        f"https://maps.googleapis.com/maps/api/staticmap?size=600x400&{markers_string}&zoom=12&key={api_key}"
     )
 
+    # Debugging output
+    print(f"Map URL: {map_url}")
+
     return render_template('nearby_donors.html', hospital=hospital, donors=nearby_donors, map_url=map_url)
+
+
+# route to show the nearby hospitals map:
+@app.route('/nearby_hospitals/<int:donor_id>', methods=['GET'])
+def nearby_hospitals(donor_id):
+    donor = Donor.query.get_or_404(donor_id)
+    
+    nearby_hospitals =[]
+    hospitals = Hospital.query.all()
+    for hospital in hospitals:
+        distance = get_distance(hospital.lat, hospital.lng, donor.lat, donor.lng)
+        if distance <= 30:
+            nearby_hospitals.append(hospital)
+    
+    print(nearby_hospitals)
+    
+    markers = []
+    for hospital in nearby_hospitals:
+        markers.append(f"markers=color:red|label:D|{hospital.lat},{hospital.lng}")
+    markers.append(f"markers=color:blue|label:H|{donor.lat},{donor.lng}")
+    
+    markers_string = "&".join(markers)
+    api_key = current_app.config['GOOGLE_MAPS_API_KEY']
+    
+    # Debugging output
+    print(f"API Key: {api_key}")
+    print(f"Markers: {markers_string}")
+
+    map_url = (
+        f"https://maps.googleapis.com/maps/api/staticmap?size=600x400&{markers_string}&zoom=12&key={api_key}"
+    )
+
+    # Debugging output
+    print(f"Map URL: {map_url}")
+
+    return render_template('nearby_hospitals.html', hospitals=nearby_hospitals, donor=donor, map_url=map_url)
