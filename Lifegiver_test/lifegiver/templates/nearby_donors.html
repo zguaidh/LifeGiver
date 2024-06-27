@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Nearby Donors for {{ hospital.name }}</h2>
+    <img src="{{ map_url }}" alt="Map" style="width: 100%; max-width: 600px;">
+    <br>
+    <ul>
+        {% for donor in donors %}
+        <li>{{ donor.first_name }} {{ donor.last_name }} - {{ donor.blood_type }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

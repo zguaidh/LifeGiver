@@ -17,6 +17,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
 from flask import current_app
 import requests
+from haversine import haversine, Unit
 
 
 @app.route('/', methods=['POST', 'GET'], strict_slashes=False)
@@ -323,7 +324,24 @@ def new_request():
         db.session.add(don_request)
         db.session.commit()
         flash('Your Request has been created!', 'success')
-        return redirect(url_for('don_requests'))
+
+         # Check if the send_notifications checkbox was checked
+        if 'send_notifications' in request.form:
+            nearby_donors = find_nearby_donors(current_user, form.blood_type.data)
+            message = f'''
+            Dear Donor, 
+            A new Donation Request for {form.blood_type.data} blood type has been posted by {current_user.name} 
+            Located at : {current_user.street}, {current_user.city}, {current_user.province}, {current_user.zip_code}, {current_user.country}
+            Donate now : {url_for('don_request', don_request_id=don_request.id, _external=True)}
+            '''
+
+            for donor in nearby_donors:
+                send_notification_email(donor, message)
+
+            flash('Notifications sent to nearby donors!', 'info')
+            return redirect(url_for('don_requests'))         
+        else:
+            return redirect(url_for('don_requests'))
     elif request.method == 'GET':
         #the name of the field is id but it will show the barcode
         form.hospital_id.data = current_user.barcode
@@ -406,8 +424,57 @@ def hospital_requests(name):
     return render_template('hospital_requests.html', title='Hospital Requests page', requests=hospital_requests, hospital=hospital)
 
 
+# method to calculate the distances using the haversine formula
+def get_distance(lat1, lng1, lat2, lng2):
+    return haversine((lat1, lng1), (lat2, lng2), unit=Unit.KILOMETERS)
 
 
+def return_match(blood_type):
+    matching_types = []
+    if blood_type[1] == '+':
+        matching_types.extend(('O-', 'O+'))
+        if blood_type[0] != 'O':
+            matching_types.extend((blood_type[0]+'-', blood_type))
+    
+    elif blood_type[1] == '-':
+        matching_types.append('O-')
+        if blood_type[0] != 'O':
+            matching_types.append(blood_type)
+        
+    elif blood_type[2] == '-':
+        matching_types.extend(('O-', 'A-', 'B-', 'AB-'))
+
+    else:
+        matching_types.extend(('O-', 'A-', 'B-', 'AB-', 'O+', 'A+', 'B+', 'AB+'))
+        
+    return matching_types
+
+def find_nearby_donors(hospital, blood_type):
+    matching_types = return_match(blood_type)
+    print(matching_types)
+    nearby_donors = []
+    for i in matching_types:
+        all_donors = Donor.query.filter_by(blood_type=i).all()
+        print(i)
+        for donor in all_donors:
+            distance = get_distance(hospital.lat, hospital.lng, donor.lat, donor.lng)
+            if distance <= 30:
+                nearby_donors.append(donor)
+    
+    print(nearby_donors)
+    return nearby_donors
+
+
+# Method to send notifications to nearby donors
+def send_notification_email(donor, message):
+    msg = Message('Urgent Blood Donation Request', sender='noreply@demo.com', recipients=[donor.email])
+    msg.body = message
+    try:
+        mail.send(msg)
+        return True
+    except Exception as e:
+        print(f"Error sending email: {e}")
+        return False
 
 
 # route for create operation for Urgent request
@@ -427,7 +494,24 @@ def new_urgent_request():
         db.session.commit()
 
         flash('Your Urgent Request has been created!', 'success')
-        return redirect(url_for('urgent_requests'))
+        
+        # Check if the send_notifications checkbox was checked
+        if 'send_notifications' in request.form:
+            nearby_donors = find_nearby_donors(current_user, form.blood_type.data)
+            message = f'''
+            Dear Donor, 
+            A new Urgent request for {form.blood_type.data} blood has been posted by {current_user.name} 
+            Located at : {current_user.street}, {current_user.city}, {current_user.province}, {current_user.zip_code}, {current_user.country}
+            Donate now : {url_for('urgent_don_request', urgent_request_id=urgent_don_request.id, _external=True)}
+            '''
+
+            for donor in nearby_donors:
+                send_notification_email(donor, message)
+
+            flash('Notifications sent to nearby donors!', 'info')
+            return redirect(url_for('nearby_donors', hospital_id=current_user.id, blood_type=form.blood_type.data))           
+        else:
+            return redirect(url_for('urgent_requests'))
     elif request.method == 'GET':
         #the name of the field is id but it will show the barcode
         form.hospital_id.data = current_user.barcode
@@ -754,7 +838,7 @@ def donation_history(donor_id):
     return render_template('donation_history.html', title='All User Donations', donations=user_donations, donor_id=donor_id)
 
 
-# route return the location od th ehopital:
+# route return the distance between hopital and donor:
 @app.route('/distance/<int:donor_id>/<int:hospital_id>', methods=['GET', 'POST'], strict_slashes=False)
 def distance(donor_id, hospital_id):
     donor = Donor.query.get_or_404(donor_id)
@@ -768,3 +852,25 @@ def distance(donor_id, hospital_id):
     directions_url = f"https://www.google.com/maps/dir/?api=1&origin={donor.lat},{donor.lng}&destination={hospital.lat},{hospital.lng}&travelmode=driving"    
     map_url = f"https://maps.googleapis.com/maps/api/staticmap?size=600x400&markers=color:red%7Clabel:D%7C{donor.lat},{donor.lng}&markers=color:blue%7Clabel:H%7C{hospital.lat},{hospital.lng}&path=color:0x0000ff%7Cweight:5%7C{donor.lat},{donor.lng}%7C{hospital.lat},{hospital.lng}&key={current_app.config['GOOGLE_MAPS_API_KEY']}"
     return render_template('distance.html', title='Distance Calculation', donor=donor, hospital=hospital, directions_url=directions_url)
+
+
+# route to show the nearby donors map:
+@app.route('/nearby_donors/<int:hospital_id>/<string:blood_type>', methods=['GET'])
+def nearby_donors(hospital_id, blood_type):
+    hospital = Hospital.query.get_or_404(hospital_id)
+    donors = Donor.query.filter_by(blood_type=blood_type).all()
+    
+    nearby_donors = find_nearby_donors(hospital, blood_type)
+    
+    markers = []
+    for donor in nearby_donors:
+        markers.append(f"color:red|label:D|{donor.lat},{donor.lng}")
+    markers.append(f"color:blue|label:H|{hospital.lat},{hospital.lng}")
+    
+    markers_string = "&".join(markers)
+    map_url = (
+        f"https://maps.googleapis.com/maps/api/staticmap?size=600x400&{markers_string}&"
+        f"key={current_app.config['GOOGLE_MAPS_API_KEY']}"
+    )
+
+    return render_template('nearby_donors.html', hospital=hospital, donors=nearby_donors, map_url=map_url)
