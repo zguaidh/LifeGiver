@@ -72,7 +72,10 @@
                     {{ form.expiration_date(class="form-control form-control-lg") }}
                 {% endif %}
             </div>
-            
+            <div class="form-group">
+                <label class="form-control-label" for="send_notifications">Send Notifications to Nearby Donors</label>
+                <input type="checkbox" id="send_notifications" name="send_notifications">
+            </div>
         </fieldset>
         <div class="form-group">
             {{ form.submit(class="btn btn-outline-info") }}

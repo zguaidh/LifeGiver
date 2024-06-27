@@ -6,12 +6,16 @@
                 <!--replace it with the hospital name later-->
               <a class="mr-2" href="{{ url_for('hospital_requests', name=request.hospital_request.name) }}">{{ request.hospital_request.name }}</a> <!--using the backref : hospital_request in the Hospital relashioships-->              
               <small class="text-muted">{{ request.request_date.strftime('%Y-%m-%d') }}</small>
-              {% if request.hospital_request.id == current_user.id  %}
-              <div>
-                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('update_don_request', don_request_id=request.id) }}">Update</a>
-                <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
-              </div>
+              {% if current_user.is_authenticated %}
+                {% if session.get('user_type') == 'hospital' %}
+                  {% if request.hospital_request.id == current_user.id  %}
+                    <div>
+                      <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('update_don_request', don_request_id=request.id) }}">Update</a>
+                      <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
+                    </div>
+                  {% endif %}
                 {% endif %}
+              {% endif %}
             </div>
             <h2><a class="article-title" href="#">{{ 'Blood type: ' ~ request.blood_type }}</a></h2>
             <!--replace # with the google maps api-->

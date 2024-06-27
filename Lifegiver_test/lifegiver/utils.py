@@ -19,8 +19,6 @@ def geocode_address(address):
 
 
 def calculate_distance(address1, address2):
-
-
     lat1, lng1 = geocode_address(address1)
     lat2, lng2 = geocode_address(address2)
     if None in [lat1, lng1, lat2, lng2]:
@@ -41,5 +39,29 @@ def calculate_distance(address1, address2):
     print({'error': 'Error calculating distance'})
 
 
-distance = calculate_distance('Rabat', 'CasaBlanca')
+distance = calculate_distance('Rabat, Morocco', 'CasaBlanca, Morocco')
 print(distance)
+
+
+def return_match(blood_type):
+    matching_types = []
+    if blood_type[1] == '+':
+        matching_types.extend(('O-', 'O+'))
+        if blood_type[0] != 'O':
+            matching_types.extend((blood_type[0]+'-', blood_type))
+    
+    elif blood_type[1] == '-':
+        matching_types.extend(('O-'))
+        if blood_type[0] != 'O':
+            matching_types.extend((blood_type))
+        
+    elif blood_type[2] == '-':
+        matching_types.extend(('O-', 'A-', 'B-', 'AB-'))
+
+    else:
+        matching_types.extend(('O-', 'A-', 'B-', 'AB-', 'O+', 'A+', 'B+', 'AB+'))
+        
+    return matching_types
+
+blood_type = 'O+'
+print(return_match(blood_type))
