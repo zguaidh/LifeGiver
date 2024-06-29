@@ -1,0 +1,133 @@
+body {
+    background-image: linear-gradient(to right, #8a1515, #9d3b3b);
+}
+
+.landing {
+    min-height: 150vh;
+    position: relative;
+}
+
+.landing .card {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    width: 1200px;
+    height: 990px;
+    padding: 25px;
+    background: #fff;
+    border: 2px solid rgb(255, 255, 255, .2);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgb(0, 0, 0, .2);
+    color: #fff;
+    border-radius: 10px;
+    display: ruby-text !important;
+}
+
+
+.landing .card .imgBx {
+    width: 450px;
+    height: 700px;
+    overflow: hidden;
+    float: right;
+    justify-content: flex-end;
+}
+
+.landing .card .imgBx img {
+    width: 100%;
+    margin-right: 20px;
+    margin-top: 120px;
+}
+
+.landing .card .infrBx {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px 0;
+    margin-top: 10px;
+    margin-left: 30px;
+}
+
+
+.form-check-label {
+    color: #8a1515 !important;
+    font-size: 19px;
+    font-weight: 200;
+    margin-left: 10px !important;
+    margin-bottom: 8px !important;
+}
+
+#submit {
+    margin-left: 10px;
+    justify-content: center;
+    padding-left: 22px;
+    padding-right: 22px;
+    color: white;
+    border: 3px solid white;
+    background-color: #8c1818;
+    border-radius: 100px;
+    font-size: large;
+}
+
+small a {
+    color: #8c1818;
+}
+
+small a:hover {
+    color: #8c1818;
+}
+
+fieldset {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 500px;
+}
+
+#email,
+#password,
+#first_name,
+#last_name,
+#confirm_password,
+#age,
+#phone_number,
+#street,
+#city,
+#province,
+#zip_code,
+#country,
+#national_id {
+    height: 40px;
+    width: 100%;
+    border-radius: 7px;
+    outline: none;
+    border: 1px solid grey !important;
+    padding: 0 10px;
+    font-size: 15px !important;
+    margin-left: 10px;
+}
+
+
+#blood_type{
+    height: 40px;
+    width: 100%;
+    border-radius: 7px;
+    outline: none;
+    border: 1px solid grey !important;
+    padding: 0 10px;
+    font-size: 15px !important;
+    padding-right: 140px;
+    margin-left: 10px;
+}
+
+.form-group label {
+    color: #8a1515;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.border-bottom {
+    color: #8a1515 !important;
+    font-family: "Acme", sans-serif;
+    font-size: 40px;
+}

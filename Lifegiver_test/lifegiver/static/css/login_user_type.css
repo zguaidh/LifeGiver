@@ -1,0 +1,106 @@
+body {
+    background-image: linear-gradient(to right, #8a1515, #9d3b3b);
+}
+
+.landing {
+    min-height: 70vh;
+    position: relative;
+}
+
+.landing .card {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    width: 1000px;
+    height: 350px;
+    padding: 25px;
+    background: #fff;
+    border: 2px solid rgb(255, 255, 255, .2);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgb(0, 0, 0, .2);
+    color: #fff;
+    border-radius: 10px;
+    display: ruby-text !important;
+}
+
+.landing .card .imgBx {
+    width: 350px;
+    height: 420px;
+    overflow: hidden;
+    float: right;
+    justify-content: flex-end;
+}
+
+.landing .card .imgBx img {
+    width: 100%;
+    height: 70%;
+    border-radius: 20px;
+}
+
+.landing .card .infrBx {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px 0;
+    margin-top: 40px;
+    margin-left: 30px;
+    justify-content: center;
+}
+
+.input_feild {
+    display: flex;
+    flex-wrap: wrap;
+    width: 50%;
+    padding-bottom: 15px;
+}
+
+.input_feild label {
+    width: 95%;
+    color: #8c1818;
+    font-size: 30px;
+    font-weight: 400;
+    margin: 5px 0;
+    font-family: "Acme", sans-serif;
+}
+
+.input_feild a {
+    margin-top: 17px;
+    margin-left: 10px;
+    padding-left: 22px;
+    padding-right: 22px;
+    color: rgb(209, 209, 209);
+    border: 3px solid white;
+    background-color: #8c1818;
+    border-radius: 100px;
+    font-size: large;
+    display: flex;
+    width: 40%;
+    padding: 10px;
+    text-decoration: none;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.input_feild a:hover {
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+}
+
+nav div ul li #regsiter {
+    margin-left: 10px;
+    margin-top: 17px;
+    color: #8c1818;
+    border: 3px solid #8c1818;
+    background-color: white;
+    border-radius: 100px;
+    font-size: large;
+}
+
+nav div ul li .nav-link {
+    color: #fff !important;
+}
+
+nav div ul li .nav-link:hover {
+    border-bottom: 2px solid #fff;
+}

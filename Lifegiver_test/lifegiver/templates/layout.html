@@ -1,86 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-
+  <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/header.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/footer.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/loading.css') }}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Acme&display=swap" rel="stylesheet" />
+    <link rel="icon" href="static/images/droplet-solid.svg" />
+    {% block link %}
 
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
-
-    
-   
+    {% endblock %}
     {% if title %}
-        <title>LifeGiver - {{ title }}</title>
+      <title>{{ title }}</title>
     {% else %}
-        <title>LifeGiver</title>
+      <title>LifeGiver</title>
     {% endif %}
-</head>
-<body>
+  </head>
+  <body>
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        
-        <a class="navbar-brand" href="{{ url_for('home') }}">LifeGiver</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('home') }}">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('about') }}">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('don_requests') }}">Requests</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('urgent_requests') }}">Urgent Requests</a>
-                </li>
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <a class="navbar-brand" href="{{ url_for('home') }}">Life Giver</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+      <!-- Managing the logout and log in -->
+      {% if current_user.is_authenticated %}
+        {% if session.get('user_type') == 'donor' %}
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('about') }}">Dashboard</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('about') }}">Urgent Request</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('about') }}">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="btn" href="{{ url_for('hospital_login') }}">log out</a>
+              </li>
             </ul>
-            <span class="navbar-text">
-            <!--Managing the logout and log in-->
-            {% if current_user.is_authenticated %}
-                {% if session.get('user_type') == 'donor' %}
-                    <a class="nav-item nav-link" href="{{ url_for('donor_dashboard') }}">Donor Dashboard</a>
-                {% elif session.get('user_type') == 'hospital' %}
-                    <a class="nav-item nav-link" href="{{ url_for('new_request') }}">New Donation Request</a>
-                    <a class="nav-item nav-link" href="{{ url_for('new_urgent_request') }}">Urgent Request</a>
-                    <a class="nav-item nav-link" href="{{ url_for('hospital_dashboard') }}">Hospital Dashboard</a>
-                {% endif %}
-                <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
-            {% else %}
-                <a class="btn btn-primary mr-2" href="{{ url_for('login') }}">Login</a>
-                <a class="btn btn-success" href="{{ url_for('register') }}">Sign up</a>
-                {% endif %}
-            </span>
+          </div>
+        {% elif session.get('user_type') == 'hospital' %}
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('about') }}">Dashboard</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('about') }}">Urgent Request</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('about') }}">Requests</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('about') }}">About</a>
+              </li>
+              <li class="nav-item">
+                <a id="logout" class="btn btn-success" href="{{ url_for('logout') }}">log out</a>
+              </li>
+            </ul>
+          </div>
+        {% endif %}
+      {% else %}
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('about') }}">About</a>
+            </li>
+            <li class="nav-item">
+              <a id="login" class="btn" href="{{ url_for('login') }}">login</a>
+            </li>
+            <li class="nav-item">
+              <a id="regsiter" class="btn" href="{{ url_for('register') }}">Register</a>
+            </li>
+          </ul>
         </div>
+      {% endif %}
     </nav>
-
-<!-- to make flush messages pop up -->
+    <!-- to make flush messages pop up -->
     <div class="col-md-8">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-          {% if messages %}
-            {% for category, message in messages %}
-              <div class="alert alert-{{ category }}">
-                {{ message }}
-              </div>
-            {% endfor %}
-          {% endif %}
-        {% endwith %}
+      {% with messages=get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+    </div>
+    <!-- loading -->
+    <section class="sec-loading">
+      <div class="one"></div>
+    </section>
+    {% block content %}
 
-        
-        {% block content %}
-        {% endblock content%}
+    {% endblock %}
+    <footer>
+      <div class="container">
+        <a href="#" class="logo">Life Giver</a>
+        <p>
+          <img src="static/images/github.svg" alt="Github" />
+          <a href="https://github.com/zguaidh/Test_portofolio">Life Giver _ Github</a>
+        </p>
       </div>
- <!-- Optional JavaScript -->
+    </footer>
+    <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    {% block script %}
+
+    {% endblock %}
+    <script>
+      window.addEventListener('load', () => {
+        const loader = document.querySelector('.sec-loading')
+        loader.classList.add('sec-loading--hidden')
+        loader.addEventListener('transitionend', () => {
+          document.body.removeChild(loader)
+        })
+      })
+    </script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-</body>
+  </body>
 </html>
