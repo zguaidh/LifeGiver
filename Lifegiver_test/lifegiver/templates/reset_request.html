@@ -1,30 +1,37 @@
 {% extends "layout.html" %}
+{% block link %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/reset_request.css') }}" />
+{% endblock link %}
 {% block content %}
-    <div class="content-section">
-        <form method="POST" action="">
-            {{ form.hidden_tag() }}
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Reset Password?</legend>
-                <div class="form-group">
-                    {{ form.email.label(class="form-control-label") }}
-                    {% if form.email.errors %}
+<div class="landing">
+    <div class="card">
+        <div class="imgBx">
+            <img src="../static/images/transparent-cartoon-red-blood-blood-droplets-blood-bubbles-dar-2d-image-of-red-blood-droplets-in-bubbles658ea3c57cbf28.655540331703846853511.png" alt="">
+        </div>
+        <div class="infrBx">
+            <form method="POST" action="">
+                {{ form.hidden_tag() }}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Reset Password?</legend>
+                    <div class="form-group">
+                        {{ form.email.label(class="form-control-label") }}
+                        {% if form.email.errors %}
                         {{ form.email(class="form-control form-control-lg is-invalid") }}
                         <div class="invalid-feedback">
                             {% for error in form.email.errors %}
-                                <span>{{ error }}</span>
+                            <span>{{ error }}</span>
                             {% endfor %}
                         </div>
-                    {% else %}
+                        {% else %}
                         {{ form.email(class="form-control form-control-lg") }}
-                    {% endif %}
+                        {% endif %}
+                    </div>
+                </fieldset>
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-outline-info") }}
                 </div>
-                
-                
-            </fieldset>
-            <div class="form-group">
-                {{ form.submit(class="btn btn-outline-info") }}
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-    
+</div>
 {% endblock content %}
