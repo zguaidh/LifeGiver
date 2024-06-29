@@ -1,9 +1,23 @@
-{% extends 'layout.html' %}
-
+{% extends "layout.html" %}
+{% block link %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/register_user_type.css') }}" />
+{% endblock link %}
 {% block content %}
-
-<a class="btn btn-primary mr-2" href="{{ url_for('new_donor') }}">Donor</a>
-<a class="btn btn-success" href="{{ url_for('hospital_registration') }}">Hospital</a>
-
-
-{% endblock content%}
+   <div class="landing">
+      <div class="card">
+         <div class="imgBx">
+             <img src="../static/images/nguy-n-hi-p-2rNHliX6XHk-unsplash (1).jpg" alt="Sgin Up">
+         </div>
+         <div class="infrBx">
+             <div class="input_feild">
+                 <label for="Hospital Login">Hospital Sgin Up</label>
+                 <a href="{{ url_for('hospital_registration') }}">Sgin Up</a>
+             </div>
+             <div class="input_feild">
+                 <label for="Donor Login">Donor Sgin Up</label>
+                 <a href="{{ url_for('new_donor') }}">Sgin Up</a>
+             </div>
+         </div>
+     </div>
+   </div>
+{% endblock content %}

@@ -1,8 +1,205 @@
-{% extends "layout.html" %}
-{% block content %}
-    
-    <h1>Home page</h1>
-   
-{% endblock content %}
+{% extends 'layout.html' %}
+{% block link %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/home.css') }}" />
+{% endblock %}
 
-<!--Add urgent requests later-->
+{% block content %}
+<div class="landing">
+   <div class="card">
+      <div class="imgBx">
+         <img src="static/images/Screenshot_2024-06-26_233011-removebg-preview.png" />
+      </div>
+      <div class="infrBx">
+         <div class="input_feild">
+            <p>
+            <h1>Your blood can</h1>
+            <p class="sp1">save lives</p>
+            <span class="sp2">Don't let fools or mosquitoes get blood; make good use of it. Donate blood and save a
+               life</span>
+            </p>
+            <a href="">Donate</a>
+         </div>
+      </div>
+   </div>
+</div>
+<section>
+   <div class="stats">
+      <p class="ph1">Life Giver provides</p>
+      <div class="container">
+         <div class="box">
+            <img src="static/images/Screenshot 2024-06-26 232757.png" alt="Find" />
+            <p class="ph1">Find</p>
+            <p>Find volunteer donors who are ready to donate through our application directly</p>
+         </div>
+         <div class="box">
+            <img src="static/images/Screenshot 2024-06-26 232816.png" alt="Connect" />
+            <p class="ph1">Connect</p>
+            <p>contact donors directly through the application without intermediaries</p>
+         </div>
+         <div class="box">
+            <img src="static/images/Screenshot 2024-06-26 232833.png" alt="Donor" />
+            <p class="ph1">Donor</p>
+            <p>do blood donation according to the location of need</p>
+         </div>
+      </div>
+   </div>
+</section>
+<div class="section">
+   <div class="container0">
+      <div class="urgent">
+         <p>Urgent Requests</p>
+      </div>
+      <div id="slider">
+         <input type="radio" name="slider" id="slide1" checked>
+         <input type="radio" name="slider" id="slide2">
+         <input type="radio" name="slider" id="slide3">
+         <input type="radio" name="slider" id="slide4">
+         <div id="slides">
+            <div id="overflow">
+               <div class="inner">
+                  <div class="slide slide_1">
+                     <div class="slide-content">
+                        <p>
+                           <svg class="hos" xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 640 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                              <path fill="#8c1818"
+                                 d="M192 48c0-26.5 21.5-48 48-48H400c26.5 0 48 21.5 48 48V512H368V432c0-26.5-21.5-48-48-48s-48 21.5-48 48v80H192V48zM48 96H160V512H48c-26.5 0-48-21.5-48-48V320H80c8.8 0 16-7.2 16-16s-7.2-16-16-16H0V224H80c8.8 0 16-7.2 16-16s-7.2-16-16-16H0V144c0-26.5 21.5-48 48-48zm544 0c26.5 0 48 21.5 48 48v48H560c-8.8 0-16 7.2-16 16s7.2 16 16 16h80v64H560c-8.8 0-16 7.2-16 16s7.2 16 16 16h80V464c0 26.5-21.5 48-48 48H480V96H592zM312 64c-8.8 0-16 7.2-16 16v24H272c-8.8 0-16 7.2-16 16v16c0 8.8 7.2 16 16 16h24v24c0 8.8 7.2 16 16 16h16c8.8 0 16-7.2 16-16V152h24c8.8 0 16-7.2 16-16V120c0-8.8-7.2-16-16-16H344V80c0-8.8-7.2-16-16-16H312z" />
+                           </svg>
+                           Dar EL-Salam Hospital
+                        </p>
+                        <p>
+                           <svg xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                              <path fill="#8c1818"
+                                 d="M192 512C86 512 0 426 0 320C0 228.8 130.2 57.7 166.6 11.7C172.6 4.2 181.5 0 191.1 0h1.8c9.6 0 18.5 4.2 24.5 11.7C253.8 57.7 384 228.8 384 320c0 106-86 192-192 192zM96 336c0-8.8-7.2-16-16-16s-16 7.2-16 16c0 61.9 50.1 112 112 112c8.8 0 16-7.2 16-16s-7.2-16-16-16c-44.2 0-80-35.8-80-80z" />
+                           </svg>
+                           Blood Type: A+
+                        </p>
+                        <p>
+                           <svg xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                              <path fill="#8c1818"
+                                 d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z" />
+                           </svg>
+                           Location: Al Kafour,Old Cairo, Egypt
+                        </p>
+                        <a href="">Donate Now</a>
+                     </div>
+                  </div>
+                  <div class="slide slide_2">
+                     <div class="slide-content">
+                        <p>
+                           <svg class="hos" xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 640 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                              <path fill="#8c1818"
+                                 d="M192 48c0-26.5 21.5-48 48-48H400c26.5 0 48 21.5 48 48V512H368V432c0-26.5-21.5-48-48-48s-48 21.5-48 48v80H192V48zM48 96H160V512H48c-26.5 0-48-21.5-48-48V320H80c8.8 0 16-7.2 16-16s-7.2-16-16-16H0V224H80c8.8 0 16-7.2 16-16s-7.2-16-16-16H0V144c0-26.5 21.5-48 48-48zm544 0c26.5 0 48 21.5 48 48v48H560c-8.8 0-16 7.2-16 16s7.2 16 16 16h80v64H560c-8.8 0-16 7.2-16 16s7.2 16 16 16h80V464c0 26.5-21.5 48-48 48H480V96H592zM312 64c-8.8 0-16 7.2-16 16v24H272c-8.8 0-16 7.2-16 16v16c0 8.8 7.2 16 16 16h24v24c0 8.8 7.2 16 16 16h16c8.8 0 16-7.2 16-16V152h24c8.8 0 16-7.2 16-16V120c0-8.8-7.2-16-16-16H344V80c0-8.8-7.2-16-16-16H312z" />
+                           </svg>
+                           Dar EL-Salam Hospital
+                        </p>
+                        <p>
+                           <svg xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                              <path fill="#8c1818"
+                                 d="M192 512C86 512 0 426 0 320C0 228.8 130.2 57.7 166.6 11.7C172.6 4.2 181.5 0 191.1 0h1.8c9.6 0 18.5 4.2 24.5 11.7C253.8 57.7 384 228.8 384 320c0 106-86 192-192 192zM96 336c0-8.8-7.2-16-16-16s-16 7.2-16 16c0 61.9 50.1 112 112 112c8.8 0 16-7.2 16-16s-7.2-16-16-16c-44.2 0-80-35.8-80-80z" />
+                           </svg>
+                           Blood Type: A+
+                        </p>
+                        <p>
+                           <svg xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                              <path fill="#8c1818"
+                                 d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z" />
+                           </svg>
+                           Location: Al Kafour,Old Cairo, Egypt
+                        </p>
+                        <a href="">Donate Now</a>
+                     </div>
+                  </div>
+                  <div class="slide slide_3">
+                     <div class="slide-content">
+                        <p>
+                           <svg class="hos" xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 640 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                              <path fill="#8c1818"
+                                 d="M192 48c0-26.5 21.5-48 48-48H400c26.5 0 48 21.5 48 48V512H368V432c0-26.5-21.5-48-48-48s-48 21.5-48 48v80H192V48zM48 96H160V512H48c-26.5 0-48-21.5-48-48V320H80c8.8 0 16-7.2 16-16s-7.2-16-16-16H0V224H80c8.8 0 16-7.2 16-16s-7.2-16-16-16H0V144c0-26.5 21.5-48 48-48zm544 0c26.5 0 48 21.5 48 48v48H560c-8.8 0-16 7.2-16 16s7.2 16 16 16h80v64H560c-8.8 0-16 7.2-16 16s7.2 16 16 16h80V464c0 26.5-21.5 48-48 48H480V96H592zM312 64c-8.8 0-16 7.2-16 16v24H272c-8.8 0-16 7.2-16 16v16c0 8.8 7.2 16 16 16h24v24c0 8.8 7.2 16 16 16h16c8.8 0 16-7.2 16-16V152h24c8.8 0 16-7.2 16-16V120c0-8.8-7.2-16-16-16H344V80c0-8.8-7.2-16-16-16H312z" />
+                           </svg>
+                           Dar EL-Salam Hospital
+                        </p>
+                        <p>
+                           <svg xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                              <path fill="#8c1818"
+                                 d="M192 512C86 512 0 426 0 320C0 228.8 130.2 57.7 166.6 11.7C172.6 4.2 181.5 0 191.1 0h1.8c9.6 0 18.5 4.2 24.5 11.7C253.8 57.7 384 228.8 384 320c0 106-86 192-192 192zM96 336c0-8.8-7.2-16-16-16s-16 7.2-16 16c0 61.9 50.1 112 112 112c8.8 0 16-7.2 16-16s-7.2-16-16-16c-44.2 0-80-35.8-80-80z" />
+                           </svg>
+                           Blood Type: A+
+                        </p>
+                        <p>
+                           <svg xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                              <path fill="#8c1818"
+                                 d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z" />
+                           </svg>
+                           Location: Al Kafour,Old Cairo, Egypt
+                        </p>
+                        <a href="">Donate Now</a>
+                     </div>
+                  </div>
+                  <div class="slide slide_4">
+                     <div class="slide-content">
+                        <p>
+                           <svg class="hos" xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 640 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                              <path fill="#8c1818"
+                                 d="M192 48c0-26.5 21.5-48 48-48H400c26.5 0 48 21.5 48 48V512H368V432c0-26.5-21.5-48-48-48s-48 21.5-48 48v80H192V48zM48 96H160V512H48c-26.5 0-48-21.5-48-48V320H80c8.8 0 16-7.2 16-16s-7.2-16-16-16H0V224H80c8.8 0 16-7.2 16-16s-7.2-16-16-16H0V144c0-26.5 21.5-48 48-48zm544 0c26.5 0 48 21.5 48 48v48H560c-8.8 0-16 7.2-16 16s7.2 16 16 16h80v64H560c-8.8 0-16 7.2-16 16s7.2 16 16 16h80V464c0 26.5-21.5 48-48 48H480V96H592zM312 64c-8.8 0-16 7.2-16 16v24H272c-8.8 0-16 7.2-16 16v16c0 8.8 7.2 16 16 16h24v24c0 8.8 7.2 16 16 16h16c8.8 0 16-7.2 16-16V152h24c8.8 0 16-7.2 16-16V120c0-8.8-7.2-16-16-16H344V80c0-8.8-7.2-16-16-16H312z" />
+                           </svg>
+                           Dar EL-Salam Hospital
+                        </p>
+                        <p>
+                           <svg xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                              <path fill="#8c1818"
+                                 d="M192 512C86 512 0 426 0 320C0 228.8 130.2 57.7 166.6 11.7C172.6 4.2 181.5 0 191.1 0h1.8c9.6 0 18.5 4.2 24.5 11.7C253.8 57.7 384 228.8 384 320c0 106-86 192-192 192zM96 336c0-8.8-7.2-16-16-16s-16 7.2-16 16c0 61.9 50.1 112 112 112c8.8 0 16-7.2 16-16s-7.2-16-16-16c-44.2 0-80-35.8-80-80z" />
+                           </svg>
+                           Blood Type: A+
+                        </p>
+                        <p>
+                           <svg xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                              <path fill="#8c1818"
+                                 d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z" />
+                           </svg>
+                           Location: Al Kafour,Old Cairo, Egypt
+                        </p>
+                        <a href="">Donate Now</a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div id="controls">
+            <label for="slide1"></label>
+            <label for="slide2"></label>
+            <label for="slide3"></label>
+            <label for="slide4"></label>
+         </div>
+         <div id="bullets">
+            <label for="slide1"></label>
+            <label for="slide2"></label>
+            <label for="slide3"></label>
+            <label for="slide4"></label>
+         </div>
+      </div>
+   </div>
+   {% endblock %}
+   {% block script %}
+   <script type="text/javascript">
+      var counter = 1;
+      setInterval(function () {
+         document.getElementById('slide' + counter).checked = true;
+         counter++;
+         if (counter > 4) {
+            counter = 1;
+         }
+      }, 5000);
+   </script>
+   {% endblock %}
