@@ -209,7 +209,7 @@ def save_picture(form_picture):
     # combining the random hex and the file extention to create the file name of the image to save
     picture_fn = random_hex + f_ext
     # get the full path to where we are going to save our picture using root_path attribute of our app
-    picture_path = os.path.join(app.root_path, 'static/pics', picture_fn)
+    picture_path = os.path.join(app.root_path, 'static/images', picture_fn)
     
 
 # resizing the images befor saving them using the pillow package
@@ -263,7 +263,7 @@ def donor_dashboard():
         form.zip_code.data=current_user.zip_code
         form.country.data=current_user.country
         form.national_id.data=current_user.national_id
-    image_file = url_for('static', filename='pics/' + current_user.image_file)
+    image_file = url_for('static', filename='images/' + current_user.image_file)
     return render_template('donor_dashboard.html', title='Donor dashboard', image_file=image_file, form=form)
 
 @app.route('/hospital_dashboard', methods=['GET', 'POST'], strict_slashes=False)
@@ -299,7 +299,7 @@ def hospital_dashboard():
         form.province.data=current_user.province
         form.zip_code.data=current_user.zip_code
         form.country.data=current_user.country
-        image_file = url_for('static', filename='pics/' + current_user.image_file)
+        image_file = url_for('static', filename='images/' + current_user.image_file)
     hospital_requests = DonationRequest.query.filter_by(hospital_id=current_user.id).all()
     hospital_urgent_requests = UrgentRequest.query.filter_by(hospital_id=current_user.id).all()
     requests_count = len(hospital_requests)
