@@ -945,9 +945,10 @@ def nearby_hospitals(donor_id):
     nearby_hospitals =[]
     hospitals = Hospital.query.all()
     for hospital in hospitals:
-        distance = get_distance(hospital.lat, hospital.lng, donor.lat, donor.lng)
-        if distance <= 30:
-            nearby_hospitals.append(hospital)
+        if donor.lat is not None and donor.lng is not None and hospital.lat is not None and hospital.lng is not None:
+            distance = get_distance(hospital.lat, hospital.lng, donor.lat, donor.lng)
+            if distance <= 30:
+                nearby_hospitals.append(hospital)
     
     print(nearby_hospitals)
     
@@ -960,7 +961,6 @@ def nearby_hospitals(donor_id):
     api_key = current_app.config['GOOGLE_MAPS_API_KEY']
     
     # Debugging output
-    print(f"API Key: {api_key}")
     print(f"Markers: {markers_string}")
 
     map_url = (
