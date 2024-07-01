@@ -266,6 +266,52 @@ def donor_dashboard():
     image_file = url_for('static', filename='images/' + current_user.image_file)
     return render_template('donor_dashboard.html', title='Donor dashboard', image_file=image_file, form=form)
 
+@app.route('/donor_profile', methods=['GET', 'POST'], strict_slashes=False)
+@login_required
+def donor_profile():
+    form = DonorUpdatingForm()
+    if form.validate_on_submit():
+        if form.picture.data:
+            picture_File = save_picture(form.picture.data)
+            current_user.image_file = picture_File
+
+        address = f"{form.street.data}, {form.city.data}, {form.province.data}, {form.zip_code.data}, {form.country.data}"
+        lat, lng = geocode_address(address)
+        current_user.first_name = form.first_name.data
+        current_user.last_name = form.last_name.data
+        current_user.email=form.email.data
+        current_user.age=form.age.data
+        current_user.phone_number=form.phone_number.data
+        current_user.blood_type=form.blood_type.data
+        current_user.street=form.street.data
+        current_user.city=form.city.data
+        current_user.province=form.province.data
+        current_user.zip_code=form.zip_code.data
+        current_user.country=form.country.data
+        current_user.national_id=form.national_id.data
+        current_user.lat=lat
+        current_user.lng=lng
+        db.session.commit()
+        flash('Your Profile has been updated successfuly!', 'success')
+        return redirect(url_for('donor_dashboard'))
+    # to make sure that the form will be populated with the existing data
+    elif request.method == 'GET':
+        form.first_name.data = current_user.first_name
+        form.last_name.data = current_user.last_name
+        form.email.data=current_user.email
+        form.age.data=current_user.age
+        form.phone_number.data=current_user.phone_number
+        form.blood_type.data=current_user.blood_type
+        form.street.data=current_user.street
+        form.city.data=current_user.city
+        form.province.data=current_user.province
+        form.zip_code.data=current_user.zip_code
+        form.country.data=current_user.country
+        form.national_id.data=current_user.national_id
+    image_file = url_for('static', filename='images/' + current_user.image_file)
+    return render_template('donor_profile.html', title='Profile', image_file=image_file, form=form)
+
+
 @app.route('/hospital_dashboard', methods=['GET', 'POST'], strict_slashes=False)
 @login_required
 def hospital_dashboard():
