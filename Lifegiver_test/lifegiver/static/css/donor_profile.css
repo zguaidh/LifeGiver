@@ -49,9 +49,10 @@ ul {
     font-size: 40px !important;
     width: 302px;
     color: black;
+    background: transparent;
 }
 
-.sidebar ul li a:hover {
+.sidebar ul li a:hover{
     width: 302px;
     background-color: #f6f6f6;
     color: black;
@@ -247,4 +248,76 @@ body {
 
 #pic {
     padding-left: 20px;
+}
+
+#submit {
+    margin-left: 10px;
+    justify-content: center;
+    padding-left: 22px;
+    padding-right: 22px;
+    color: white;
+    border: 3px solid white;
+    background-color: #8c1818;
+    border-radius: 100px;
+    font-size: large;
+}
+
+#email,
+#password,
+#first_name,
+#last_name,
+#confirm_password,
+#age,
+#phone_number,
+#street,
+#city,
+#province,
+#zip_code,
+#country,
+#national_id {
+    height: 40px;
+    width: 100%;
+    border-radius: 7px;
+    outline: none;
+    border: 1px solid grey !important;
+    padding: 0 10px;
+    font-size: 15px !important;
+    margin-left: 10px;
+}
+
+
+#blood_type{
+    height: 40px;
+    width: 100%;
+    border-radius: 7px;
+    outline: none;
+    border: 1px solid grey !important;
+    padding: 0 10px;
+    font-size: 15px !important;
+    padding-right: 140px;
+    margin-left: 10px;
+}
+
+fieldset {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 500px;
+}
+
+.form-group label {
+    color: #8a1515;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.border-bottom {
+    color: #8a1515 !important;
+    font-family: "Acme", sans-serif;
+    font-size: 40px;
+}
+
+.media-body {
+    margin-left: 42px;
+    margin-top: 25px
 }
