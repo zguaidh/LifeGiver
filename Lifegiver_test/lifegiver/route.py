@@ -352,6 +352,46 @@ def hospital_dashboard():
     urgent_requests_count = len(hospital_urgent_requests)
     return render_template('hospital_dashboard.html', title='Hospital dashboard', image_file=image_file, requests_count=requests_count, urgent_requests_count=urgent_requests_count, form=form)
 
+@app.route('/hospital_profile', methods=['GET', 'POST'], strict_slashes=False)
+@login_required
+def hospital_profile():
+    form = HospitalUpdatingForm()
+    if form.validate_on_submit():
+        if form.picture.data:
+            picture_File = save_picture(form.picture.data)
+            current_user.image_file = picture_File
+        address = f"{form.street.data}, {form.city.data}, {form.province.data}, {form.zip_code.data}, {form.country.data}"
+        lat, lng = geocode_address(address)
+        current_user.name = form.name.data
+        current_user.email=form.email.data
+        current_user.phone_number=form.phone_number.data
+        current_user.street=form.street.data
+        current_user.city=form.city.data
+        current_user.province=form.province.data
+        current_user.zip_code=form.zip_code.data
+        current_user.country=form.country.data
+        current_user.lat=lat
+        current_user.lng=lng
+        db.session.commit()
+        flash('Your account has been updated successfuly!', 'success')
+        return redirect(url_for('hospital_dashboard'))
+    # to make sure that the form will be populated with the existing data
+    elif request.method == 'GET':
+        form.name.data = current_user.name
+        form.email.data=current_user.email
+        form.phone_number.data=current_user.phone_number
+        form.street.data=current_user.street
+        form.city.data=current_user.city
+        form.province.data=current_user.province
+        form.zip_code.data=current_user.zip_code
+        form.country.data=current_user.country
+        image_file = url_for('static', filename='images/' + current_user.image_file)
+    hospital_requests = DonationRequest.query.filter_by(hospital_id=current_user.id).all()
+    hospital_urgent_requests = UrgentRequest.query.filter_by(hospital_id=current_user.id).all()
+    requests_count = len(hospital_requests)
+    urgent_requests_count = len(hospital_urgent_requests)
+    return render_template('hospital_profile.html', title='Hospital profile', image_file=image_file, requests_count=requests_count, urgent_requests_count=urgent_requests_count, form=form)
+
 
 @app.route("/logout")
 def logout():
