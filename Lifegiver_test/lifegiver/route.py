@@ -309,7 +309,7 @@ def donor_profile():
         form.country.data=current_user.country
         form.national_id.data=current_user.national_id
     image_file = url_for('static', filename='images/' + current_user.image_file)
-    return render_template('donor_profile.html', title='Profile', image_file=image_file, form=form)
+    return render_template('donor_profile.html', title='Profile', image_file=image_file, form=form, user=current_user)
 
 
 @app.route('/hospital_dashboard', methods=['GET', 'POST'], strict_slashes=False)
@@ -390,7 +390,7 @@ def hospital_profile():
     hospital_urgent_requests = UrgentRequest.query.filter_by(hospital_id=current_user.id).all()
     requests_count = len(hospital_requests)
     urgent_requests_count = len(hospital_urgent_requests)
-    return render_template('hospital_profile.html', title='Hospital profile', image_file=image_file, requests_count=requests_count, urgent_requests_count=urgent_requests_count, form=form)
+    return render_template('hospital_profile.html', title='Hospital profile', image_file=image_file, requests_count=requests_count, urgent_requests_count=urgent_requests_count, form=form, user=current_user)
 
 
 @app.route("/logout")
@@ -447,8 +447,8 @@ def don_requests():
     page = request.args.get('page', 1, type=int)
     # we are going to use the query query.order_by(DonationRequest.request_date.asc()) to order our requests by date
     requests = DonationRequest.query.order_by(DonationRequest.request_date.asc()).paginate(page=page, per_page=5) # inteade of using .all() we gonna change it to .paginate() to get 10 requests per page
-
-    return render_template('requests.html', title='Donation Requests page', requests=requests)
+    image_file = current_user.image_file
+    return render_template('requests.html', title='Donation Requests page', requests=requests, image_file=image_file)
 
 # route that takes the user to a specific request by id
 @app.route('/don_request/<int:don_request_id>', methods=['POST', 'GET'], strict_slashes=False)
@@ -618,7 +618,8 @@ def urgent_requests():
     # we are going to use the query query.order_by(DonationRequest.request_date.asc()) to order our requests by date
     requests = UrgentRequest.query.order_by(UrgentRequest.request_date.asc()).paginate(page=page, per_page=5) # inteade of using .all() we gonna change it to .paginate() to get 10 requests per page
     # dont forget the display the list in the homa page banner
-    return render_template('urgent_requests.html', title='Urgent Requests page', requests=requests)
+    
+    return render_template('urgent_requests.html', title='Urgent Requests page', requests=requests, image_file=current_user.image_file)
 
 # route that takes the user to a specific urgent request by id
 @app.route('/urgent_don_request/<int:urgent_request_id>', methods=['POST', 'GET'], strict_slashes=False)
@@ -936,16 +937,19 @@ def donation_history(donor_id):
 def distance(donor_id, hospital_id):
     donor = Donor.query.get_or_404(donor_id)
     hospital = Hospital.query.get_or_404(hospital_id)
-    
-#    donor_coordinates = (donor.lat, donor.lng)
-#    hospital_coordinates = (hospital.lat, hospital.lng)
-    
-    # Example URL for Google Maps Directions API
-#    directions_url = f"https://www.google.com/maps/dir/?api=1&origin={donor_coordinates[0]},{donor_coordinates[1]}&destination={hospital_coordinates[0]},{hospital_coordinates[1]}&travelmode=driving"
-    directions_url = f"https://www.google.com/maps/dir/?api=1&origin={donor.lat},{donor.lng}&destination={hospital.lat},{hospital.lng}&travelmode=driving"    
-    map_url = f"https://maps.googleapis.com/maps/api/staticmap?size=600x400&markers=color:red%7Clabel:D%7C{donor.lat},{donor.lng}&markers=color:blue%7Clabel:H%7C{hospital.lat},{hospital.lng}&path=color:0x0000ff%7Cweight:5%7C{donor.lat},{donor.lng}%7C{hospital.lat},{hospital.lng}&key={current_app.config['GOOGLE_MAPS_API_KEY']}"
-    return render_template('distance.html', title='Distance Calculation', donor=donor, hospital=hospital, directions_url=directions_url)
 
+    if not donor.lat or not donor.lng or not hospital.lat or not hospital.lng:
+        flash('Invalid coordinates for donor or hospital', 'danger')
+        return redirect(url_for('home'))
+    
+     # Debugging output
+    print(f"Donor coordinates: {donor.lat}, {donor.lng}")
+    print(f"Hospital coordinates: {hospital.lat}, {hospital.lng}")
+    
+    directions_url = f"https://www.google.com/maps/dir/?api=1&origin={donor.lat},{donor.lng}&destination={hospital.lat},{hospital.lng}&travelmode=driving"
+    map_url = f"https://maps.googleapis.com/maps/api/staticmap?size=600x400&markers=color:red%7Clabel:D%7C{donor.lat},{donor.lng}&markers=color:blue%7Clabel:H%7C{hospital.lat},{hospital.lng}&path=color:0x0000ff%7Cweight:5%7C{donor.lat},{donor.lng}%7C{hospital.lat},{hospital.lng}&key={current_app.config['GOOGLE_MAPS_API_KEY']}"
+    
+    return render_template('distance.html', title='Distance Calculation', donor=donor, hospital=hospital, map_url=map_url, directions_url=directions_url)
 
 # route to show the nearby donors map:
 @app.route('/nearby_donors/<int:hospital_id>/<string:blood_type>', methods=['GET'])
