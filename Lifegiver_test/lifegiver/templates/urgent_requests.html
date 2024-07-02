@@ -1,41 +1,136 @@
 {% extends "layout.html" %}
+{% block link %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/urgent_requests.css') }}" />
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/framework.css') }}" />
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dashborad_don.css') }}" />
+{% endblock link %}
 {% block content %}
-    {% for request in requests.items %}
-        <article class="media content-section">
-          <div class="media-body">
-            <div class="article-metadata">
-                <!--replace it wit the hospital name later-->
-              <a class="mr-2" href="{{ url_for('hospital_urgent_requests', name=request.hospital_urgent_request.name) }}">{{ request.hospital_urgent_request.name }}</a> <!--using the backref : hospital-->              
-              <small class="text-muted">{{ request.request_date.strftime('%Y-%m-%d') }}</small>
-            </div>
-            <h2><a class="article-title" href="{{ url_for('urgent_don_request', urgent_request_id=request.id) }}">{{ 'Blood type: ' ~ request.blood_type }}</a></h2>
-            <!--replace # with the google maps api-->
-            <h2><a class="article-title" href="#">{{ 'Location: ' ~ request.hospital_urgent_request.street ~ ' ' ~ request.hospital_urgent_request.city ~ ', ' ~ request.hospital_urgent_request.country }}</a></h2>
 
-            <p class="article-content">{{ 'Expiration date: ' ~ request.expiration_date.strftime('%Y-%m-%d') }}</p>
+<div class="page d-flex">
+  <div class="sidebar bg-white p-20 p-relative">
+    <ul>
+      <li>
+        <a class="active d-flex align-center fs-14 c-black rad-6 p-10" href="{{ url_for('donor_dashboard') }}">
+          <svg xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+            <path
+              d="M0 96C0 60.7 28.7 32 64 32H448c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zm64 64V416H224V160H64zm384 0H288V416H448V160z" />
+          </svg>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a class="d-flex align-center fs-14 c-black rad-6 p-10" href="{{ url_for('donor_profile') }}">
+          <svg xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+            <path
+              d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z" />
+          </svg>
+          <span>Profile</span>
+        </a>
+      </li>
+      <li>
+        <a class="d-flex align-center fs-14 c-black rad-6 p-10" href="{{ url_for('don_requests') }}">
+          <svg xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+            <path
+              d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z" />
+          </svg>
+          <span>Request</span>
+        </a>
+      </li>
+      <li>
+        <a class="d-flex align-center fs-14 c-black rad-6 p-10" href="{{ url_for('urgent_requests') }}">
+          <svg xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+            <path
+              d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-384c13.3 0 24 10.7 24 24V264c0 13.3-10.7 24-24 24s-24-10.7-24-24V152c0-13.3 10.7-24 24-24zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z" />
+          </svg>
+          <span>Urgent Request</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="content w-full">
+    <!-- Start Head -->
+    <div class="head bg-white p-15 between-flex">
+      <div class="search p-relative">
+      </div>
+      <div class="icons d-flex align-center">
+        <span class="notification p-relative">
+          <svg xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+            <path
+              d="M224 0c-17.7 0-32 14.3-32 32V51.2C119 66 64 130.6 64 208v18.8c0 47-17.3 92.4-48.5 127.6l-7.4 8.3c-8.4 9.4-10.4 22.9-5.3 34.4S19.4 416 32 416H416c12.6 0 24-7.4 29.2-18.9s3.1-25-5.3-34.4l-7.4-8.3C401.3 319.2 384 273.9 384 226.8V208c0-77.4-55-142-128-156.8V32c0-17.7-14.3-32-32-32zm45.3 493.3c12-12 18.7-28.3 18.7-45.3H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7z" />
+          </svg>
+        </span>
+        <img class="rounded-circle account-img" src="{{ image_file }}">
+      </div>
+    </div>
+    <!-- End Head -->
+    <h1 class="p-relative">Urgent Request</h1>
+      {% for request in requests.items %}
+      <article class="media content-section">
+        <div class="media-body" id="card">
+          <div class="article-metadata">
+            <!--replace it wit the hospital name later-->
+            <a class="mr-2"
+              href="{{ url_for('hospital_urgent_requests', name=request.hospital_urgent_request.name) }}">{{
+              request.hospital_urgent_request.name }}</a> <!--using the backref : hospital-->
+            <small class="text-muted"> <svg xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                <path
+                  d="M152 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H64C28.7 64 0 92.7 0 128v16 48V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V192 144 128c0-35.3-28.7-64-64-64H344V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H152V24zM48 192H400V448c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192z" />
+              </svg>
+              {{ request.request_date.strftime('%Y-%m-%d') }}</small>
           </div>
+          <h2> <svg xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+              <path fill="#8c1818"
+                d="M192 512C86 512 0 426 0 320C0 228.8 130.2 57.7 166.6 11.7C172.6 4.2 181.5 0 191.1 0h1.8c9.6 0 18.5 4.2 24.5 11.7C253.8 57.7 384 228.8 384 320c0 106-86 192-192 192zM96 336c0-8.8-7.2-16-16-16s-16 7.2-16 16c0 61.9 50.1 112 112 112c8.8 0 16-7.2 16-16s-7.2-16-16-16c-44.2 0-80-35.8-80-80z" />
+            </svg>
+            <a class="article-title" href="{{ url_for('urgent_don_request', urgent_request_id=request.id) }}">{{ 'Blood
+              type: ' ~ request.blood_type }}</a>
+          </h2>
+          <!--replace # with the google maps api-->
+          <h2><svg xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+              <path fill="#8c1818"
+                d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z" />
+            </svg>
+            <a class="article-title" href="#">{{ 'Location: ' ~ request.hospital_urgent_request.street ~ ' ' ~
+              request.hospital_urgent_request.city ~ ', ' ~ request.hospital_urgent_request.country }}</a>
+          </h2>
+          <p class="article-content">{{ 'Expiration date: ' ~ request.expiration_date.strftime('%Y-%m-%d') }}</p>
           <!-- A condition to show the button just when the user is a donor-->
           <div>
             {% if current_user.is_authenticated %}
-                {% if session.get('user_type') == 'donor' %}
-                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('urgent_donation', don_request_id=request.hospital_urgent_request.id) }}">Donate Now</a>
-                {% endif %}
+            {% if session.get('user_type') == 'donor' %}
+            <a id="submit" class="btn btn-secondary btn-sm mt-1 mb-1"
+              href="{{ url_for('urgent_donation', don_request_id=request.hospital_urgent_request.id) }}">Donate Now</a>
+            {% endif %}
             {% else %}
             {% endif %}
           </div>
-        </article>
-        </article>
-    {% endfor %}
-    
-    {% for page_num in requests.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=1) %}
-      {% if page_num %}
+        </div>
+      </article>
+      {% endfor %}
+      <div class="div">
+        {% for page_num in requests.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=1) %}
+        {% if page_num %}
         {% if requests.page == page_num %} <!--adding a conditional to show on which page we are currently-->
-          <a class="btn btn-info mb-4" href="{{ url_for('urgent_requests', page=page_num) }}">{{ page_num }}</a>
+        <a id="page" class="btn btn-info mb-4" href="{{ url_for('urgent_requests', page=page_num) }}">{{ page_num }}</a>
         {% else %}
-          <a class="btn btn-outline-info mb-4" href="{{ url_for('urgent_requests', page=page_num) }}">{{ page_num }}</a>
+        <a id="page" class="btn btn-outline-info mb-4" href="{{ url_for('urgent_requests', page=page_num) }}">{{
+          page_num
+          }}</a>
         {% endif %}
-      {% else %}
-        ...
-      {% endif %}
-    {% endfor %}
+        {% else %}
+        <span>. . .</span>
+        {% endif %}
+        {% endfor %}
+      </div>
+  </div>
+</div>
+</div>
 {% endblock content %}
