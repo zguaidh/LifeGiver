@@ -8,13 +8,13 @@
     <div class="sidebar bg-white p-20 p-relative">
         <ul>
             <li>
-                <a class="active d-flex align-center fs-14 c-black rad-6 p-10" href="{{ url_for('hospital_dashoard') }}">
+                <a class="active d-flex align-center fs-14 c-black rad-6 p-10" href="{{ url_for('hospital_dashboard') }}">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M0 96C0 60.7 28.7 32 64 32H448c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zm64 64V416H224V160H64zm384 0H288V416H448V160z"/></svg>
                     <span>Dashboard</span>
                 </a>
             </li>
             <li>
-                <a class="d-flex align-center fs-14 c-black rad-6 p-10" href="{{ url_for('donor_profile') }}">
+                <a class="d-flex align-center fs-14 c-black rad-6 p-10" href="{{ url_for('hospital_profile') }}">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/></svg>
                     <span>Profile</span>
                 </a>
@@ -62,7 +62,7 @@
                     <div>Total Donation Requests: <span class="d-block c-grey fs-14 mt-10"><a class="mr-2" href="{{ url_for('requests_history', name=current_user.name) }}">{{ requests_count }}</a></span></div>
                     <div>Total Urgent Donation Requests:  <span class="d-block c-grey fs-14 mt-10"><a class="mr-2" href="{{ url_for('hospital_urgent_requests', name=current_user.name) }}">{{ urgent_requests_count }}</a></span></div>
                 </div>
-                <a href="{{ url_for('donor_profile') }}" class="visit d-block fs-14 bg-blue c-white w-fit btn-shape">Profile</a>
+                <a href="{{ url_for('hospital_profile') }}" class="visit d-block fs-14 bg-blue c-white w-fit btn-shape">Profile</a>
             </div>
         </div>
     </div>
