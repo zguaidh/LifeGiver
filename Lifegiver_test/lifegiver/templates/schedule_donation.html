@@ -1,32 +1,40 @@
 {% extends 'layout.html' %}
-
+{% block link %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/schedule_donation.css') }}" />
+{% endblock link %}
 {% block content %}
 
-<div class="content-section">
-    <form method="POST" action="{{ url_for('schedule_donation', don_request_id=don_request.id) }}">
-        {{ form.hidden_tag() }}
-        <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Schedule your donation</legend>
-            <div class="form-group">
-                {{ form.donation_date.label(class="form-control-label") }}
-                {% if form.donation_date.errors %}
-                    {{ form.donation_date(class="form-control form-control-lg is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for error in form.donation_date.errors %}
-                            <span>{{ error }}</span>
-                        {% endfor %}
-                    </div>
-                {% else %}
-                    {{ form.donation_date(class="form-control form-control-lg") }}
-                {% endif %}
-            </div>
-            
-            
-        </fieldset>
-        <div class="form-group">
-            {{ form.submit(class="btn btn-outline-info") }}
+<div class="landing">
+    <div class="card">
+        <div class="imgBx">
+            <img src="../static/images/kisspng-calendar-academic-year-academic-term-school-may-calendar-cartoon-cliparts-5aa968663e2940.8563643015210517502546.png" alt="Login">
         </div>
-    </form>
-</div>  
-
+        <div class="infrBx">
+            <div class="content-section">
+                <form method="POST" action="{{ url_for('schedule_donation', don_request_id=don_request.id) }}">
+                    {{ form.hidden_tag() }}
+                    <fieldset class="form-group">
+                        <legend class="border-bottom mb-4">Schedule your donation</legend>
+                        <div class="form-group">
+                            {{ form.donation_date.label(class="form-control-label") }}
+                            {% if form.donation_date.errors %}
+                                {{ form.donation_date(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.donation_date.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.donation_date(class="form-control form-control-lg") }}
+                            {% endif %}
+                        </div>
+                    </fieldset>
+                    <div class="form-group">
+                        {{ form.submit(class="btn btn-outline-info") }}
+                    </div>
+                </form>
+            </div>            
+        </div>
+    </div>
+</div>
 {% endblock content%}
