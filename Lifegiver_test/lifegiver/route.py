@@ -439,7 +439,7 @@ def new_request():
         #the name of the field is id but it will show the barcode
         form.hospital_id.data = current_user.barcode
         # add the same line for the name
-    return render_template('create_request.html', title='New Request',form=form, legend='Create Request') # the legend keywoed will be used to change the template legend (whether its a new post or an update)
+    return render_template('create_request.html', title='New Request',form=form, image_file=current_user.image_file, legend='Create Request') # the legend keywoed will be used to change the template legend (whether its a new post or an update)
 # route to return all the donation requests
 
 @app.route('/don_requests', methods=['POST', 'GET'], strict_slashes=False)
@@ -609,7 +609,7 @@ def new_urgent_request():
         #the name of the field is id but it will show the barcode
         form.hospital_id.data = current_user.barcode
         # add the same line for the name
-    return render_template('create_urgent_request.html', title='New Urgent Request',form=form, legend='Create Urgent Request') # the legend keywoed will be used to change the template legend (whether its a new post or an update)
+    return render_template('create_urgent_request.html', title='New Urgent Request',form=form, image_file=current_user.image_file, legend='Create Urgent Request') # the legend keywoed will be used to change the template legend (whether its a new post or an update)
 
 # route for all urgent requests
 @app.route('/urgent_requests', methods=['POST', 'GET'], strict_slashes=False)
