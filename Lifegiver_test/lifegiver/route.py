@@ -23,7 +23,8 @@ from haversine import haversine, Unit
 @app.route('/', methods=['POST', 'GET'], strict_slashes=False)
 @app.route('/home', methods=['POST', 'GET'], strict_slashes=False)
 def home():
-    return render_template('home.html', title='Home page')
+    requests = UrgentRequest.query.all()
+    return render_template('home.html', title='Home page', requests=requests)
 
 # to check later if we gonna keep it
 @app.route("/about", methods=['GET'], strict_slashes=False)
