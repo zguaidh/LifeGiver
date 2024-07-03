@@ -38,6 +38,37 @@ LifeGiver is an intuitive platform designed to connect blood donors with hospita
 - **Real-Time Notifications:** Keeping donors informed about urgent needs in their vicinity, allowing for immediate responses that can save lives.
 
 # Team and roles
+
+[ABDALLAH HASSAN](Project manager & Full-stack)
+**Role:** Project manager & Full-stack
+
+**Contribution:**
+- Updating the front end part with the Jinja code.
+- Implementation of profile settings for enhanced user customization.
+- Ensuring  the Integrating of backend and Frontend parts.
+- Contributed to the overall design and visual appeal of the platform.
+- Managing the project in terms of tasks, time management.
+
+[SARA ELKAAD](Frontend Developer)
+**Role:** Front-End
+
+**Contribution:**
+- Frontend developmnt.
+- Ensuring a responsive and intuitive user experience.
+- Developping the user interface using HTML, CSS and Bootstrap.
+- Implementation of test cases.
+- Created the website video.
+
+[HABIBA ZGUAID](Backend Developer)
+**Role:** Back-End
+
+**Contribution:**
+- Backend development.
+- Creation of data models.
+- Handling the database integration.
+- Implementation of users Authenticiation and API endpoints.
+- Implementation of Email notification features.
+
 # Technologies
 
 ## Front-End
