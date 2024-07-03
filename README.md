@@ -59,7 +59,7 @@ LifeGiver is an intuitive platform designed to connect blood donors with hospita
 - Implementation of test cases.
 - Created the website video.
 
-## [HABIBA ZGUAID](Backend Developer)
+## [HABIBA ZGUAID](https://www.linkedin.com/in/habibazguaid/)(Backend Developer)
 **Role:** Back-End
 
 **Contribution:**
