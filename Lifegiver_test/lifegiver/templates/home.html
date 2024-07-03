@@ -17,7 +17,13 @@
             <span class="sp2">Don't let fools or mosquitoes get blood; make good use of it. Donate blood and save a
                life</span>
             </p>
-            <a href="{{ url_for('don_requests')}}">Donate</a>
+            {% if current_user.is_authenticated %}
+               {% if session.get('user_type') == 'donor' %}
+                  <a href="{{ url_for('don_requests')}}">Donate</a>
+               {% endif %}
+            {% else %}
+               <a href="{{ url_for('existing_donor')}}">Donate</a>
+            {% endif %}
          </div>
       </div>
    </div>
