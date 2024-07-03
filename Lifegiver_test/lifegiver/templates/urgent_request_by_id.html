@@ -1,11 +1,23 @@
 {% extends "layout.html" %}
+{% block link %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/urgent_request_by_id.css') }}" />
+{% endblock link %}
 {% block content %}
+<div id="title">
+  <h1>Urgent Request By ID</h1>
+</div>
         <article class="media content-section">
-          <div class="media-body">
+          <div class="media-body" id="card">
             <div class="article-metadata">
                 <!--replace it with the hospital name later-->
-              <a class="mr-2" href="{{ url_for('hospital_urgent_requests', name=request.hospital_urgent_request.name) }}">{{ request.hospital_urgent_request.name }}</a> <!--using the backref : hospital_request in the Hospital relashioships-->              
-              <small class="text-muted">{{ request.request_date.strftime('%Y-%m-%d') }}</small>
+              <a class="mr-2" href="#">{{ request.hospital_urgent_request.name }}</a> <!--using the backref : hospital_request in the Hospital relashioships-->              
+              <small class="text-muted">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                <path
+                  d="M152 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H64C28.7 64 0 92.7 0 128v16 48V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V192 144 128c0-35.3-28.7-64-64-64H344V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H152V24zM48 192H400V448c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192z" />
+              </svg>
+                {{ request.request_date.strftime('%Y-%m-%d') }}</small>
               {% if current_user.is_authenticated %}
                 {% if session.get('user_type') == 'hospital' %}
                   {% if request.hospital_urgent_request.id == current_user.id  %}
@@ -17,26 +29,43 @@
                 {% endif %}
               {% endif %}
             </div>
-            <h2><a class="article-title" href="#">{{ 'Blood type: ' ~ request.blood_type }}</a></h2>
+            <h2><a class="article-title" href="#">
+              <svg xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+              <path fill="#8c1818"
+                d="M192 512C86 512 0 426 0 320C0 228.8 130.2 57.7 166.6 11.7C172.6 4.2 181.5 0 191.1 0h1.8c9.6 0 18.5 4.2 24.5 11.7C253.8 57.7 384 228.8 384 320c0 106-86 192-192 192zM96 336c0-8.8-7.2-16-16-16s-16 7.2-16 16c0 61.9 50.1 112 112 112c8.8 0 16-7.2 16-16s-7.2-16-16-16c-44.2 0-80-35.8-80-80z" />
+            </svg>
+              {{ 'Blood type: ' ~ request.blood_type }}</a></h2>
             
             <!--replace # with the google maps api-->
-            <h2><a class="article-title" href="#">{{ 'Location: ' ~ request.hospital_urgent_request.street ~ ' ' ~ request.hospital_urgent_request.city ~ ', ' ~ request.hospital_urgent_request.country }}</a></h2>
-
-         
-            <p class="article-content">{{ 'Expiration date: ' ~ request.expiration_date.strftime('%Y-%m-%d') }}</p>
-          </div>
+            <h2>
+              <svg xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+              <path fill="#8c1818"
+                d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z" />
+            </svg>
+              <a class="article-title" href="#">{{ 'Location: ' ~ request.hospital_urgent_request.street ~ ' ' ~ request.hospital_urgent_request.city ~ ', ' ~ request.hospital_urgent_request.country }}</a></h2>
+            <p  class="article-content">
+              <svg xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+              <path
+                d="M152 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H64C28.7 64 0 92.7 0 128v16 48V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V192 144 128c0-35.3-28.7-64-64-64H344V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H152V24zM48 192H400V448c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192z" />
+            </svg>
+              <span id="expiration">{{ 'Expiration date: ' ~ request.expiration_date.strftime('%Y-%m-%d') }}</span>
+            </p>
           <!-- A condition to show the button just when the user is a donor-->
           <div>
             {% if current_user.is_authenticated %}
                 {% if session.get('user_type') == 'donor' %}
-                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('urgent_donation', don_request_id=request.hospital_urgent_request.id) }}">Donate Now</a>
+                <a id="submit" class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('urgent_donation', don_request_id=request.hospital_urgent_request.id) }}">Donate Now</a>
+                <a id="submit" class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('hospital_urgent_requests', name=request.hospital_urgent_request.name) }}">More information about Hospital</a>
                 {% endif %}
             {% else %}
             {% endif %}
           </div>
+        </div>
         </article>
         <!-- Modal to show an alert to confirm befor deleting-->
-
         <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
             <div class="modal-content">

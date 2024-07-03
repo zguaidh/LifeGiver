@@ -1,14 +1,23 @@
 {% extends 'layout.html' %}
-
+{% block link %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/nearby_donors.css') }}" />
+{% endblock link %}
 {% block content %}
-<div class="container">
-    <h2>Nearby Donors for {{ hospital.name }}</h2>
-    <img src="{{ map_url }}" alt="Map" style="width: 100%; max-width: 600px;">
-    <br>
-    <ul>
-        {% for donor in donors %}
-        <li>{{ donor.first_name }} {{ donor.last_name }} - {{ donor.blood_type }}</li>
-        {% endfor %}
-    </ul>
+<div class="landing">
+    <div class="card">
+        <div class="imgBx">
+            <img src="{{ map_url }}" alt="Map" style="width: 100%; max-width: 600px;">
+        </div>
+        <div class="infrBx">
+            <h2>Nearby Donors for {{ hospital.name }}</h2>
+                <img src="../static/images/c4f6080d57bc47a4829c5e11358236ea.png" alt="">
+            </h2>
+            <ul>
+                {% for donor in donors %}
+                <li>{{ donor.first_name }} {{ donor.last_name }} - {{ donor.blood_type }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 </div>
 {% endblock %}
