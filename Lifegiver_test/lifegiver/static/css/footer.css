@@ -5,7 +5,7 @@ footer {
     position: relative;
     color: white;
     text-align: center;
-    min-height: 150px;
+    min-height: 160px;
     z-index: 3;
 }
 
@@ -31,7 +31,7 @@ footer a {
     color: white;
 }
 
-footer a:hover{
+footer a:hover {
     color: white;
 }
 
@@ -54,4 +54,13 @@ footer p img {
 footer p a {
     font-weight: bold;
     color: white;
+}
+
+.footer .copyright {
+    margin-top: 60px;
+}
+
+.footer .copyright span {
+    font-weight: bold;
+    color: #fff;
 }

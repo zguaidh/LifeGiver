@@ -1,55 +1,67 @@
 {% extends "layout.html" %}
-
+{% block link %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/donation.css') }}" />
+{% endblock link %}
 {% block content %}
-<div class="container mt-4">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="mb-0">Donation Information</h2> <!-- Header for the donation information card -->
-                </div>
-                <div class="card-body">
-                        <h4 class="mb-3">To donate, please head to:</h4> <!-- Instruction to the donor -->
-                        <h3 class="text-primary">{{ don_request.hospital_request.name ~ ' ' ~ 'at ' ~ user_donation.donation_date }}</h3> <!-- Display hospital name -->
-                        <hr> <!-- Horizontal line for separation -->
-                        <h4><a href="{{ url_for('distance', donor_id=current_user.id, hospital_id=don_request.hospital_request.id) }}">Location:</a></h4> <!-- Label for location details -->
-                        <p class="mb-2">
-                            {{ don_request.hospital_request.street }}, {{ don_request.hospital_request.city }}, {{ don_request.hospital_request.province }}, {{ don_request.hospital_request.country }}
-                        </p> <!-- Display hospital's street, city, province, and country -->
-                        <p class="mb-2">
-                            Postal Code: {{ don_request.hospital_request.zip_code }}
-                        </p> <!-- Display hospital's postal code -->
-                        <p>
-                            Phone Number: {{ don_request.hospital_request.phone_number }}
-                        </p> <!-- Display hospital's phone number -->
-                        <hr> <!-- Horizontal line for separation -->
-                        <h4>Request Details:</h4> <!-- Label for request details -->
-                        <p>
-                            Blood Type Needed: <strong>{{ don_request.blood_type }}</strong>
-                        </p> <!-- Display the blood type needed -->
-                        <p>
-                            Request Status: <strong>{{ don_request.status }}</strong>
-                        </p> <!-- Display the status of the request -->
-                        <p>
-                            Request Date: <strong>{{ don_request.request_date.strftime('%Y-%m-%d') }}</strong>
-                        </p> <!-- Display the date the request was made -->
-                        <p>
-                            Expiration Date: <strong>{{ don_request.expiration_date.strftime('%Y-%m-%d') }}</strong>
-                        </p> <!-- Display the expiration date of the request -->
-
-                    <hr> <!-- Horizontal line for separation -->
-                    <div class="text-center mb-4">
-                        <h4 class="mb-3">Thank You for Your Generosity!</h4> <!-- Thank you message header -->
-                        <p>Your donation can save lives. Thank you for being a hero and making a difference in someone's life. Every drop of blood counts and your contribution is invaluable.</p> <!-- Motivational speech to encourage donors -->
-                    </div>
-                    <div class="text-center">
-                        <a href="{{ url_for('hospital_requests', name=don_request.hospital_request.name) }}" class="btn btn-primary">
-                            View More Requests from {{ don_request.hospital_request.name }}
-                        </a> <!-- Button to view more requests from the hospital -->
+<div class="landing">
+    <div class="card1">
+        <div class="imgBx">
+            <img src="../static/images/Screenshot_2024-06-27_210513-removebg-preview.png" alt="Login">
+        </div>
+        <div class="infrBx">
+            <div class="container mt-4">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header">
+                                <h2 class="mb-0">Donation Information</h2> <!-- Header for the donation information card -->
+                            </div>
+                            <div class="card-body">
+                                    <h4 class="mb-3">To donate, please head to:</h4> <!-- Instruction to the donor -->
+                                    <h3 class="text-primary">{{ don_request.hospital_request.name ~ ' ' ~ 'at ' ~ user_donation.donation_date }}</h3> <!-- Display hospital name -->
+                                    <hr> <!-- Horizontal line for separation -->
+                                    <h4>Location:</h4> <!-- Label for location details -->
+                                    <p class="mb-2">
+                                        {{ don_request.hospital_request.street }}, {{ don_request.hospital_request.city }}, {{ don_request.hospital_request.province }}, {{ don_request.hospital_request.country }}
+                                    </p> <!-- Display hospital's street, city, province, and country -->
+                                    <p class="mb-2">
+                                        Postal Code: {{ don_request.hospital_request.zip_code }}
+                                    </p> <!-- Display hospital's postal code -->
+                                    <p>
+                                        Phone Number: {{ don_request.hospital_request.phone_number }}
+                                    </p> <!-- Display hospital's phone number -->
+                                    <hr> <!-- Horizontal line for separation -->
+                                    <h4>Request Details:</h4> <!-- Label for request details -->
+                                    <p>
+                                        Blood Type Needed: <strong>{{ don_request.blood_type }}</strong>
+                                    </p> <!-- Display the blood type needed -->
+                                    <p>
+                                        Request Status: <strong>{{ don_request.status }}</strong>
+                                    </p> <!-- Display the status of the request -->
+                                    <p>
+                                        Request Date: <strong>{{ don_request.request_date.strftime('%Y-%m-%d') }}</strong>
+                                    </p> <!-- Display the date the request was made -->
+                                    <p>
+                                        Expiration Date: <strong>{{ don_request.expiration_date.strftime('%Y-%m-%d') }}</strong>
+                                    </p> <!-- Display the expiration date of the request -->
+                                <hr> <!-- Horizontal line for separation -->
+                                <div class="text-center mb-4">
+                                    <h4 class="mb-3">Thank You for Your Generosity!</h4> <!-- Thank you message header -->
+                                    <p>Your donation can save lives. Thank you for being a hero and making a difference in someone's life. Every drop of blood counts and your contribution is invaluable.</p> <!-- Motivational speech to encourage donors -->
+                                </div>
+                                <div class="text-center">
+                                    <a id="submit" href="{{ url_for('hospital_requests', name=don_request.hospital_request.name) }}" class="btn btn-primary">
+                                        View More Requests from {{ don_request.hospital_request.name }}
+                                    </a> <!-- Button to view more requests from the hospital -->
+                                    <a id="submit" href="{{ url_for('distance', donor_id=current_user.id, hospital_id=don_request.hospital_request.id) }}">Click here to Location</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 {% endblock content %}

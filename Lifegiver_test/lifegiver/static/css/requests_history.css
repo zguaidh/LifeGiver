@@ -1,0 +1,107 @@
+body {
+    background-image: linear-gradient(to right, #8a1515, #9d3b3b);
+}
+
+#card{
+    padding-left: 20px;
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    background: #fff;
+    border: 2px solid rgb(255, 255, 255, .2);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgb(0, 0, 0, .2);
+    color: #fff;
+    border-radius: 10px;
+    border: 2px solid #8a1515;
+}
+
+article {
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+}
+
+#submit{
+    margin-left: 10px;
+    justify-content: center;
+    padding-left: 22px;
+    padding-right: 22px;
+    color: white;
+    border: 3px solid white;
+    background-color: #8c1818;
+    border-radius: 100px;
+    font-size:large;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#page {
+    background-color: #8c1818;
+    border: 1px solid #fff;
+    color: #fff;
+    margin-left: 5px;
+}
+
+.div {
+    display: flex;
+    justify-content: center;
+}
+
+.div span {
+    color: #8a1515;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 4px;
+    font-size: 30px;
+}
+
+svg {
+    width: 17px;
+    margin-right: 6px;
+}
+
+small {
+    font-size: 20px;
+    margin-left: 60px;
+}
+
+.article-metadata {
+    display: flex;
+    justify-content: space-between;
+}
+
+.article-metadata a {
+    color: #8c1818;
+    font-size: 30px;
+    font-weight: 400;
+    font-family: "Acme", sans-serif;
+    text-decoration: none;
+}
+
+h2 a{
+    color: #8c1818 !important;
+    font-size: 30px  !important;
+    text-decoration: none !important;
+}
+
+#title h1 {
+    color: #fff;
+    font-family: "Acme", sans-serif;
+}
+
+#title  {
+    display: flex;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 20px;
+}
+
+#title svg {
+    margin-right: 10px;
+    width: 30px;
+}
+#expiration {
+    color: black !important;
+}
