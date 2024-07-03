@@ -39,7 +39,7 @@ LifeGiver is an intuitive platform designed to connect blood donors with hospita
 
 # Team and roles
 
-[ABDALLAH HASSAN](Project manager & Full-stack)
+## [ABDALLAH HASSAN](Project manager & Full-stack)
 **Role:** Project manager & Full-stack
 
 **Contribution:**
@@ -49,7 +49,7 @@ LifeGiver is an intuitive platform designed to connect blood donors with hospita
 - Contributed to the overall design and visual appeal of the platform.
 - Managing the project in terms of tasks, time management.
 
-[SARA ELKAAD](Frontend Developer)
+## [SARA ELKAAD](Frontend Developer)
 **Role:** Front-End
 
 **Contribution:**
@@ -59,7 +59,7 @@ LifeGiver is an intuitive platform designed to connect blood donors with hospita
 - Implementation of test cases.
 - Created the website video.
 
-[HABIBA ZGUAID](Backend Developer)
+## [HABIBA ZGUAID](Backend Developer)
 **Role:** Back-End
 
 **Contribution:**
