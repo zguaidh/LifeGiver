@@ -266,7 +266,7 @@ We welcome contributions from the community! Please follow these steps to contri
 
 <a href="#" target="blank">
 <p align="center">Watch Website Demo</p>
-<p align="center"><img width="70%" src="https://github.com/zguaidh/LifeGiver/blob/master/Lifegiver_test/lifegiver/static/images/transparent-cartoon-red-blood-blood-droplets-blood-bubbles-dar-2d-image-of-red-blood-droplets-in-bubbles658ea3c57cbf28.655540331703846853511.png" alt="lifegiver" /></p> 
+<p align="center"><img width="25%" src="https://github.com/zguaidh/LifeGiver/blob/master/Lifegiver_test/lifegiver/static/images/transparent-cartoon-red-blood-blood-droplets-blood-bubbles-dar-2d-image-of-red-blood-droplets-in-bubbles658ea3c57cbf28.655540331703846853511.png" alt="lifegiver" /></p> 
 </a>
 
 ## Deployement
