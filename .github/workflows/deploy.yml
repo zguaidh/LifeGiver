@@ -29,8 +29,10 @@ jobs:
           # Add commands to generate your static files if needed
           # For example, you might run a custom Flask command to collect static files
           mkdir -p build
-          cp -r static/* build/
-          cp -r templates/* build/
+          cp -r Lifegiver_test/lifegiver/static/* build/
+          cp -r Lifegiver_test/lifegiver/static/css/* build/
+          cp -r Lifegiver_test/lifegiver/static/images/* build/
+          cp -r Lifegiver_test/lifegiver/templates/* build/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
