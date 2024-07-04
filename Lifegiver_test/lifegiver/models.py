@@ -17,7 +17,6 @@ def load_user(user_id):
         return Hospital.query.get(int(user_id))
     return None
 
-
 class Donor(db.Model, UserMixin):
     __tablename__ = 'donor'
     

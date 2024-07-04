@@ -17,16 +17,18 @@
                   d="M152 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H64C28.7 64 0 92.7 0 128v16 48V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V192 144 128c0-35.3-28.7-64-64-64H344V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H152V24zM48 192H400V448c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192z" />
               </svg>
                 {{ request.request_date.strftime('%Y-%m-%d') }}</small>
-              {% if current_user.is_authenticated %}
-                {% if session.get('user_type') == 'hospital' %}
-                  {% if request.hospital_request.id == current_user.id  %}
-                    <div>
-                      <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('donationrequests.update_don_request', don_request_id=request.id) }}">Update</a>
-                      <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
-                    </div>
+
+                <!--Checking its the hospital who posted the request -->
+                {% if current_user.is_authenticated %}
+                  {% if session.get('user_type') == 'hospital' %}
+                    {% if request.hospital_request.id == current_user.id  %}
+                      <div>
+                        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('donationrequests.update_don_request', don_request_id=request.id) }}">Update</a>
+                        <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
+                      </div>
+                    {% endif %}
                   {% endif %}
                 {% endif %}
-              {% endif %}
             </div>
             <h2><svg xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
