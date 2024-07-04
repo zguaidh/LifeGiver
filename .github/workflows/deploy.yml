@@ -28,8 +28,7 @@ jobs:
 
       - name: Build static files
         run: |
-          # Add commands to generate your static files if needed
-          # For example, you might run a custom Flask command to collect static files
+          # Generate static files if needed
           mkdir -p build
           cp -r Lifegiver_test/lifegiver/static/* build/
           cp -r Lifegiver_test/lifegiver/static/css/* build/
@@ -41,4 +40,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build  # Update this to the directory containing your built site
+          publish_dir: ./build  # Use the build directory
