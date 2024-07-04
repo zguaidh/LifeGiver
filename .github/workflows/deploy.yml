@@ -38,16 +38,6 @@ jobs:
           cp -r Lifegiver_test/lifegiver/templates build/
           cp -r Lifegiver_test/app.py build/
           cp -r Lifegiver_test/lifegiver build/
-          cp -r Lifegiver_test/lifegiver/donationrequests build/
-          cp -r Lifegiver_test/lifegiver/donors build/
-          cp -r Lifegiver_test/lifegiver/errors build/
-          cp -r Lifegiver_test/lifegiver/hospitals build/
-          cp -r Lifegiver_test/lifegiver/main build/
-          cp -r Lifegiver_test/lifegiver/urgentrequests build/
-          cp -r Lifegiver_test/lifegiver/userdonations build/
-          cp -r Lifegiver_test/lifegiver/models.py build/
-          cp -r Lifegiver_test/lifegiver/__init__.py build/
-          cp -r Lifegiver_test/lifegiver/config.py build/
         shell: bash
 
       - name: Deploy to GitHub Pages
