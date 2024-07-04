@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - master  # Change this to your default branch if it's not 'main'
+      - master/Lifegiver_test  # Change this to your default branch if it's not 'main'
 
 jobs:
   build:
