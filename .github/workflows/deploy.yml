@@ -23,6 +23,7 @@ jobs:
           python -m venv venv
           source venv/bin/activate
           pip install -r requirements.txt
+        shell: bash
 
       - name: Build static files
         run: |
@@ -33,6 +34,7 @@ jobs:
           cp -r Lifegiver_test/lifegiver/static/css/* build/
           cp -r Lifegiver_test/lifegiver/static/images/* build/
           cp -r Lifegiver_test/lifegiver/templates/* build/
+        shell: bash
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
