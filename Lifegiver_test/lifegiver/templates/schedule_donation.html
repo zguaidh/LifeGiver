@@ -11,7 +11,7 @@
         </div>
         <div class="infrBx">
             <div class="content-section">
-                <form method="POST" action="{{ url_for('schedule_donation', don_request_id=don_request.id) }}">
+                <form method="POST" action="{{ url_for('userdonations.schedule_donation', don_request_id=don_request.id) }}">
                     {{ form.hidden_tag() }}
                     <fieldset class="form-group">
                         <legend class="border-bottom mb-4">Schedule your donation</legend>

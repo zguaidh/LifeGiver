@@ -43,7 +43,7 @@
           <div>
             {% if current_user.is_authenticated %}
                 {% if session.get('user_type') == 'donor' %}
-                <a id="submit" class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('urgent_donation', don_request_id=req.hospital_urgent_request.id) }}">Donate Now</a>
+                <a id="submit" class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('urgentrequests.urgent_donation', don_request_id=req.hospital_urgent_request.id) }}">Donate Now</a>
                 {% endif %}
             {% else %}
             {% endif %}
@@ -55,9 +55,9 @@
        {% for page_num in requests.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=1) %}
       {% if page_num %}
         {% if requests.page == page_num %} <!--adding a conditional to show on which page we are currently-->
-          <a id="page" class="btn btn-info mb-4" href="{{ url_for('hospital_urgent_requests', name=hospital.name, page=page_num) }}">{{ page_num }}</a>
+          <a id="page" class="btn btn-info mb-4" href="{{ url_for('urgentrequests.hospital_urgent_requests', name=hospital.name, page=page_num) }}">{{ page_num }}</a>
         {% else %}
-          <a id="page" class="btn btn-outline-info mb-4" href="{{ url_for('hospital_urgent_requests',name=hospital.name, page=page_num) }}">{{ page_num }}</a>
+          <a id="page" class="btn btn-outline-info mb-4" href="{{ url_for('urgentrequests.hospital_urgent_requests',name=hospital.name, page=page_num) }}">{{ page_num }}</a>
         {% endif %}
       {% else %}
         <span>. . .</span>

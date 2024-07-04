@@ -3,9 +3,9 @@ from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 # from itsdangerous import Serializer, BadSignature, SignatureExpired
 # from itsdangerous import TimedSerializer as Serializer
 #from itsdangerous import URLSafeTimedSerializer as Serializer
-from lifegiver import db, login_manager, app
+from lifegiver import db, login_manager
 from flask_login import UserMixin
-from flask import session
+from flask import session, current_app
 import json
 
 @login_manager.user_loader
@@ -58,11 +58,11 @@ class Donor(db.Model, UserMixin):
     # method that creates tokens 
     def get_reset_token(self, expires_sec=1800):
         # Debugging: Print the type and value of app.config['SECRET_KEY']
-        print(f"SECRET_KEY type: {type(app.config['SECRET_KEY'])}")
-        print(f"SECRET_KEY value: {app.config['SECRET_KEY']}")
+        print(f"SECRET_KEY type: {type(current_app.config['SECRET_KEY'])}")
+        print(f"SECRET_KEY value: {current_app.config['SECRET_KEY']}")
 
 
-        s = Serializer(app.config['SECRET_KEY'], expires_sec) # passing the expiration time and our secret key set in the __init__ file  
+        s = Serializer(current_app.config['SECRET_KEY'], expires_sec) # passing the expiration time and our secret key set in the __init__ file  
         # For debbuging : explicitly encode the payload as bytes
         payload = {'user_id': self.id}
         token = s.dumps(payload)
@@ -74,7 +74,7 @@ class Donor(db.Model, UserMixin):
     # method to verify the token , we will use it in the reset_token route
     @staticmethod # since this method deosnt do anything with the instance of this user
     def verify_reset_token(token):
-        s = Serializer(app.config['SECRET_KEY'])
+        s = Serializer(current_app.config['SECRET_KEY'])
         try:
             user_id = s.loads(token)['user_id']
         except:

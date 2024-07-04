@@ -10,7 +10,7 @@
     <div class="sidebar bg-white p-20 p-relative">
         <ul>
             <li>
-                <a class="active d-flex align-center fs-14 c-black rad-6 p-10" href="{{ url_for('donor_dashboard') }}">
+                <a class="active d-flex align-center fs-14 c-black rad-6 p-10" href="{{ url_for('donors.donor_dashboard') }}">
                     <svg xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
                         <path
@@ -20,7 +20,7 @@
                 </a>
             </li>
             <li>
-                <a class="d-flex align-center fs-14 c-black rad-6 p-10" href="{{ url_for('donor_profile') }}">
+                <a class="d-flex align-center fs-14 c-black rad-6 p-10" href="{{ url_for('donors.donor_profile') }}">
                     <svg xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
                         <path
@@ -30,7 +30,7 @@
                 </a>
             </li>
             <li>
-                <a class="d-flex align-center fs-14 c-black rad-6 p-10" href="{{ url_for('don_requests') }}">
+                <a class="d-flex align-center fs-14 c-black rad-6 p-10" href="{{ url_for('donationrequests.don_requests') }}">
                     <svg xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
                         <path
@@ -40,7 +40,7 @@
                 </a>
             </li>
             <li>
-                <a class="d-flex align-center fs-14 c-black rad-6 p-10" href="{{ url_for('urgent_requests') }}">
+                <a class="d-flex align-center fs-14 c-black rad-6 p-10" href="{{ url_for('urgentrequests.urgent_requests') }}">
                     <svg xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
                         <path
@@ -83,13 +83,13 @@
                             current_user.last_name }}</span></div>
                     <div>Your Donation Count is : {{current_user.donation_count }} 
                         <a class="d-block c-grey fs-14 mt-10"><a  id="buttom" class="mr-2"
-                                href="{{ url_for('donation_history', donor_id=current_user.id) }}"> Donation History</a>
+                                href="{{ url_for('donors.donation_history', donor_id=current_user.id) }}"> Donation History</a>
                     </div>
                     <div>View Nearby Hospitals <span class="d-block c-grey fs-14 mt-10"><a id="buttom" class="mr-2"
-                                href="{{ url_for('nearby_hospitals', donor_id=current_user.id) }}">Click Here</a></span>
+                                href="{{ url_for('donors.nearby_hospitals', donor_id=current_user.id) }}">Click Here</a></span>
                     </div>
                 </div>
-                <a href="{{ url_for('donor_profile') }}"
+                <a href="{{ url_for('donors.donor_profile') }}"
                     class="visit d-block fs-14 bg-blue c-white w-fit btn-shape">Profile</a>
             </div>
         </div>
