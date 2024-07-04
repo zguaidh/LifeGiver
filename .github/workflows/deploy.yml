@@ -23,17 +23,21 @@ jobs:
           python -m venv venv
           source venv/bin/activate
           pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -r Lifegiver_test/requirements.txt
         shell: bash
 
       - name: Build static files
         run: |
-          # Generate static files if needed
+          # Make sure the build directory exists
           mkdir -p build
-          cp -r Lifegiver_test/lifegiver/static/* build/
-          cp -r Lifegiver_test/lifegiver/static/css/* build/
-          cp -r Lifegiver_test/lifegiver/static/images/* build/
-          cp -r Lifegiver_test/lifegiver/templates/* build/
+          
+          # Copy all necessary files to the build directory
+          cp -r Lifegiver_test/lifegiver/static build/
+          cp -r Lifegiver_test/lifegiver/static/css build/
+          cp -r Lifegiver_test/lifegiver/static/images build/
+          cp -r Lifegiver_test/lifegiver/templates build/
+          cp -r Lifegiver_test/app.py build/
+          cp -r Lifegiver_test/lifegiver build/
         shell: bash
 
       - name: Deploy to GitHub Pages
@@ -41,3 +45,4 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build  # Use the build directory
+
