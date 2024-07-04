@@ -48,10 +48,10 @@
                                     <p>Your donation can save lives. Thank you for being a hero and making a difference in someone's life. Every drop of blood counts and your contribution is invaluable.</p> <!-- Motivational speech to encourage donors -->
                                 </div>
                                 <div class="text-center">
-                                    <a id="submit" href="{{ url_for('hospital_requests', name=don_request.hospital_request.name) }}" class="btn btn-primary">
+                                    <a id="submit" href="{{ url_for('donationrequests.hospital_requests', name=don_request.hospital_request.name) }}" class="btn btn-primary">
                                         View More Requests from {{ don_request.hospital_request.name }}
                                     </a> <!-- Button to view more requests from the hospital -->
-                                    <a id="submit" href="{{ url_for('distance', donor_id=current_user.id, hospital_id=don_request.hospital_request.id) }}">Click here to Location</a>
+                                    <a id="submit" href="{{ url_for('donors.distance', donor_id=current_user.id, hospital_id=don_request.hospital_request.id) }}">Click here to Location</a>
                                 </div>
                             </div>
                         </div>

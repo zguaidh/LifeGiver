@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+{% block link %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/about.css') }}" />
+{% endblock link %}
+{% block content %}
+<div class="landing">
+    <div class="card">
+        <div class="imgBx">
+            <img src="../static/images/Screenshot_2024-06-27_210513-removebg-preview.png" alt="Login">
+        </div>
+        <div class="infrBx">
+            <h1>Oops! 403 - YOU DON'T HAVE PERMISSION TO DO THAT!</h1>
+            <div class="input_feild">
+                <p>
+                    please check your account and try again
+                </p>
+                <a id="submit" href="{{ url_for('main.home') }}">Return to Home page</a>
+        </div>
+    </div>
+</div>
+{% endblock content %}

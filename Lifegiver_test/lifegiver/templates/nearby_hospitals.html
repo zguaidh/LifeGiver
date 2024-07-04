@@ -14,7 +14,7 @@
             </h2>
             <ul>
                 {% for hospital in hospitals %}
-                <li><a id="submit" class="mr-2" href="{{ url_for('hospital_requests', name=hospital.name) }}">{{ hospital.name }}</a></li>
+                <li><a id="submit" class="mr-2" href="{{ url_for('donationrequests.hospital_requests', name=hospital.name) }}">{{ hospital.name }}</a></li>
                 {% endfor %}
             </ul>
         </div>

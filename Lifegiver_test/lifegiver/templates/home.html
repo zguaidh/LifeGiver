@@ -19,10 +19,10 @@
             </p>
             {% if current_user.is_authenticated %}
                {% if session.get('user_type') == 'donor' %}
-                  <a href="{{ url_for('don_requests')}}">Donate</a>
+                  <a href="{{ url_for('donationrequests.don_requests')}}">Donate</a>
                {% endif %}
             {% else %}
-               <a href="{{ url_for('existing_donor')}}">Donate</a>
+               <a href="{{ url_for('donors.existing_donor')}}">Donate</a>
             {% endif %}
          </div>
       </div>
