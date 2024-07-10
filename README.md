@@ -54,7 +54,7 @@ After the development phase, we each wrote a blog post to reflect on the Lifegiv
 
 * Sara's article: (https://medium.com/@saraelakaad/alx-portfolio-project-blog-post-fb1563cb4008)
 * Abdallah's article:
-* Habiba's article: 
+* Habiba's article: (https://medium.com/@zguaidhabiba/alx-portfolio-project-blog-post-33cad72cd678)
 
 # Technologies
 
