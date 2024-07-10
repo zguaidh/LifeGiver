@@ -1,45 +1,24 @@
-# LifeGiver
-## Where your blood can save lives
+
+# LifeGiver  ~ * Where your blood can save lives *
+
+![Alt text](https://i.postimg.cc/T30dpMD6/rename-png.jpg)
 
 Don't let fools or mosquitoes get your blood; make good use of it. Use it to save lives instead.
 Welcome to LifeGiver, a platform designed to connect donors with those in need and make every drop count.
 
-# Tables of Content
+# Introduction
 
-* [Description of the Project](#description-of-the-project)
-* [Our Mission](#our-mission)
-* [Team and Roles](#team-and-roles)
-* [Technologies](#technologies)
-* [Installation](#installation)
-* [Usage](#usage)
-* [Contribution](#contribution)
-* [Discover the Project](#discover-the-project)
-  * [Screenshots](#screenshots)
-  * [Demo](#demo)
-  * [Deployment](#deployment)
-* [Bugs](#bugs)
-* [Authors](#authors)
+## The Project
+Don't let fools or mosquitoes get your blood; make good use of it. Use it to save lives instead. Welcome to LifeGiver, a platform designed to connect donors with those in need and make every drop count.
 
+[**LifeGiver**](http://3.94.213.7/) 
 
-# Description of the Project
-
-LifeGiver is an intuitive platform designed to connect blood donors with hospitals experiencing shortages. This README provides an overview of our mission, introduces our team, outlines the technologies we use, details our core features, and explains how you can contribute to the LifeGiver project.
-
-# Our Mission
-
-- **Life-Saving Connection:** Designed to facilitate a seamless connection between blood donors and hospitals in urgent need, ensuring timely and life-saving donations.
-
-- **User-Friendly Experience:** Providing an intuitive platform that makes it simple for donors to find nearby donation centers and for hospitals to manage urgent requests.
-
-- **Community-Driven:** Empowering communities to contribute to the well-being of their members by making blood donation easier and more accessible.
-
-- **Efficient Resource Utilization:** Streamlining the process of blood donation and distribution to optimize the use of this vital resource and reduce shortages.
-
-- **Real-Time Notifications:** Keeping donors informed about urgent needs in their vicinity, allowing for immediate responses that can save lives.
+## The Context
+This project is our Portfolio Project, concluding our Foundations Year at ALX. We were able to choose who we wanted to work with and what we wanted to work on, as long as we present a working program at the end of the three weeks of development.
 
 # Team and roles
 
-## [ABDALLAH HASSAN](Project manager & Full-stack)
+## [ABDALLAH HASSAN](http://www.linkedin.com/in/abdallah-gamal-bb8612262)(Project manager & Full-stack)
 **Role:** Project manager & Full-stack
 
 **Contribution:**
@@ -49,7 +28,7 @@ LifeGiver is an intuitive platform designed to connect blood donors with hospita
 - Contributed to the overall design and visual appeal of the platform.
 - Managing the project in terms of tasks, time management.
 
-## [SARA ELKAAD](Frontend Developer)
+## [SARA ELKAAD](https://www.linkedin.com/in/sara-muhammad-24a82a318?trk=contact-info)(Frontend Developer)
 **Role:** Front-End
 
 **Contribution:**
@@ -58,6 +37,7 @@ LifeGiver is an intuitive platform designed to connect blood donors with hospita
 - Developping the user interface using HTML, CSS and Bootstrap.
 - Implementation of test cases.
 - Created the website video.
+
 
 ## [HABIBA ZGUAID](https://www.linkedin.com/in/habibazguaid/)(Backend Developer)
 **Role:** Back-End
@@ -68,6 +48,13 @@ LifeGiver is an intuitive platform designed to connect blood donors with hospita
 - Handling the database integration.
 - Implementation of users Authenticiation and API endpoints.
 - Implementation of Email notification features.
+
+## Blog posts
+After the development phase, we each wrote a blog post to reflect on the Lifegiver journey.
+
+* Sara's article: (https://medium.com/@saraelakaad/alx-portfolio-project-blog-post-fb1563cb4008)
+* Abdallah's article:
+* Habiba's article: 
 
 # Technologies
 
@@ -269,22 +256,15 @@ We welcome contributions from the community! Please follow these steps to contri
 <p align="center"><img width="25%" src="https://github.com/zguaidh/LifeGiver/blob/master/Lifegiver_test/lifegiver/static/images/transparent-cartoon-red-blood-blood-droplets-blood-bubbles-dar-2d-image-of-red-blood-droplets-in-bubbles658ea3c57cbf28.655540331703846853511.png" alt="lifegiver" /></p> 
 </a>
 
-## Deployement
+# Related projects
 
-site deployed at : [LifeGiver](#)
+* [AirBnB Clone]: a simple web app made in Python.
 
-# Bugs
+* [Simple Shell]: a command line interpreter that replicates the sh program.
 
-No known bugs at this time.
+# License
 
-# Authors
-
-- **Abdallah Hassan**: [GitHub](https://github.com/abdallahgamal110a), [LinkedIn]()
-- **Sara Elkaad**: [GitHub](https://github.com/sara-muhammad), [LinkedIn]()
-- **Habiba Zguaid**: [GitHub](https://github.com/zguaidh), [LinkedIn](https://www.linkedin.com/in/habibazguaid/)
-
-
-Project Repository: [GitHub](https://github.com/zguaidh/LifeGiver)
----
+MIT License
 
 Thank you for using Life Giver! Together, we can save lives by making blood donation easier and more efficient.
+
