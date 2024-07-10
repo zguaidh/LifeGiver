@@ -13,8 +13,9 @@ Don't let fools or mosquitoes get your blood; make good use of it. Use it to sav
 
 [**LifeGiver**](http://3.94.213.7/) 
 
-## The Context
-This project is our Portfolio Project, concluding our Foundations Year at ALX. We were able to choose who we wanted to work with and what we wanted to work on, as long as we present a working program at the end of the three weeks of development.
+## The story
+The idea for Life Giver was born out of a personal experience that highlighted the critical need for a reliable blood donation system. When a close family member needed an urgent blood transfusion, the struggle to find a suitable donor in time was a wake-up call. I realized that many people want to donate blood but don't know where or when they are needed most. Life Giver aims to bridge this gap by creating an efficient, user-friendly platform that connects blood donors with hospitals in need.
+
 
 # Team and roles
 
@@ -53,7 +54,7 @@ This project is our Portfolio Project, concluding our Foundations Year at ALX. W
 After the development phase, we each wrote a blog post to reflect on the Lifegiver journey.
 
 * Sara's article: (https://medium.com/@saraelakaad/alx-portfolio-project-blog-post-fb1563cb4008)
-* Abdallah's article:
+* Abdallah's article:(https://www.linkedin.com/posts/abdallah-gamal-bb8612262_activity-7216897976810545155-i35b?utm_source=share&utm_medium=member_desktop)
 * Habiba's article: 
 
 # Technologies
