@@ -55,7 +55,8 @@ After the development phase, we each wrote a blog post to reflect on the Lifegiv
 
 * Sara's article: (https://medium.com/@saraelakaad/alx-portfolio-project-blog-post-fb1563cb4008)
 * Abdallah's article:(https://www.linkedin.com/posts/abdallah-gamal-bb8612262_activity-7216897976810545155-i35b?utm_source=share&utm_medium=member_desktop)
-* Habiba's article: 
+* Habiba's article: (https://medium.com/@zguaidhabiba/alx-portfolio-project-blog-post-33cad72cd678)
+
 
 # Technologies
 
@@ -252,7 +253,7 @@ We welcome contributions from the community! Please follow these steps to contri
 
 ## Demo
 
-<a href="#" target="blank">
+<a href="https://www.youtube.com/watch?v=kpgRsQjKGEU&t=6s" target="blank">
 <p align="center">Watch Website Demo</p>
 <p align="center"><img width="25%" src="https://github.com/zguaidh/LifeGiver/blob/master/Lifegiver_test/lifegiver/static/images/transparent-cartoon-red-blood-blood-droplets-blood-bubbles-dar-2d-image-of-red-blood-droplets-in-bubbles658ea3c57cbf28.655540331703846853511.png" alt="lifegiver" /></p> 
 </a>
